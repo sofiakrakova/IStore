@@ -12,7 +12,8 @@ namespace IStore.Domain
         public int DeliveryTime { get; set; }
         public List<Comment> Comments { get; set; }
 
-        public ItemCard(string imageBase64, double price, string description, string title)
+
+        public ItemCard(string title, string description, double price, string imageBase64)
         {
             if (price < 0)
                 throw new ArgumentException("Price cannot be less than 0", nameof(price));
