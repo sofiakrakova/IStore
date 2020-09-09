@@ -1,8 +1,8 @@
 ﻿using IStore.Data;
 using IStore.Domain;
-using System;
+using System.Collections.Generic;
 using System.Data.Common;
-using System.Text;
+using System.Linq;
 
 namespace IStore.Sandbox
 {
@@ -10,19 +10,18 @@ namespace IStore.Sandbox
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-
             DbConnectionStringBuilder sb = new DbConnectionStringBuilder();
             sb.Add("Server", "localhost");
             sb.Add("Database", "istoredb");
             sb.Add("User Id", "root");
             sb.Add("Password", "admin");
 
-            CommentRepository commentRepository = new CommentRepository(sb.ConnectionString);
-            Comment comment = commentRepository.Get(1);
-            Console.WriteLine(comment.Text);
+            CategoryRepository categoryRepository = new CategoryRepository(sb.ConnectionString);
+            List<Category> categories = categoryRepository.GetAll().ToList();
 
-            Console.ReadLine();
+            var headphones = categories.Single(x => x.Title == "Headphones");
+            headphones.Active = false;
+            categoryRepository.Update(headphones);
         }
     }
 }

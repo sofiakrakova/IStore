@@ -1,28 +1,28 @@
 ﻿using Dapper;
 using IStore.Domain;
 using MySql.Data.MySqlClient;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
 namespace IStore.Data
 {
-    public class CommentRepository : IRepository<Comment>
+    public class CategoryRepository : IRepository<Category>
     {
         public string ConnectionString { get; }
         public string DefaultTableName => "categories";
 
-        public CommentRepository(string connectionString)
+        public CategoryRepository(string connectionString)
         {
             ConnectionString = connectionString;
         }
 
-        public void Create(Comment obj)
+        public void Create(Category obj)
         {
             using (IDbConnection connection = new MySqlConnection(ConnectionString))
             {
-                var query = $"INSERT INTO {DefaultTableName} VALUE(NULL, {obj.Parent_Id}, '{obj.Text}', {obj.Product_Id}, {obj.User_Id});";
+                int active = obj.Active ? 1 : 0;
+                var query = $"INSERT INTO {DefaultTableName} VALUE(NULL, {obj.Parent_Id}, '{obj.Title}', {active});";
                 var affectedRows = connection.Execute(query);
             }
         }
@@ -33,35 +33,40 @@ namespace IStore.Data
             {
                 var query = RepositoryUtils.DeleteByIdQuery(DefaultTableName, id);
                 var affectedRows = connection.Execute(query);
+
+                //TODO: what if (affectedRows != 1) ?
             }
         }
 
-        public Comment Get(int id)
+        public Category Get(int id)
         {
             using (IDbConnection connection = new MySqlConnection(ConnectionString))
             {
                 var query = RepositoryUtils.GetByIdQuery(DefaultTableName, id);
-                return connection.QueryFirstOrDefault<Comment>(query);
+                return connection.QueryFirstOrDefault<Category>(query);
             }
         }
 
-        public IEnumerable<Comment> GetAll()
+        public IEnumerable<Category> GetAll()
         {
             using (IDbConnection connection = new MySqlConnection(ConnectionString))
             {
                 var query = RepositoryUtils.GetAllQuery(DefaultTableName);
-                return connection.Query<Comment>(query);
+                return connection.Query<Category>(query);
             }
         }
 
-        public void Update(Comment obj)
+        public void Update(Category obj)
         {
             using (IDbConnection connection = new MySqlConnection(ConnectionString))
             {
-                var query = $@"UPDATE {DefaultTableName} 
-SET parent_id={obj.Parent_Id}, text='{obj.Text}', product_id={obj.Product_Id}, user_id={obj.User_Id}
-WHERE id={obj.Id};";
+                int active = obj.Active ? 1 : 0;
 
+                //TODO: deal with null values (does they need to be converted to NULL?)
+                var query = $@"UPDATE {DefaultTableName} 
+SET parent_id={obj.Parent_Id}, title='{obj.Title}', active={active}
+WHERE id={obj.Id};";
+                
                 var affectedRows = connection.Execute(query);
             }
         }
