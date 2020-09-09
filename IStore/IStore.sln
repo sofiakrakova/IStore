@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IStore.Domain", "IStore.Dom
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{CF74A83E-E40A-41F4-B6BA-84B012D2F5BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IStore.Domain.Tests", "IStore.Domain.Tests\IStore.Domain.Tests.csproj", "{247BB8BA-8E4D-4CC7-9086-1B995AC1C1A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IStore.Domain.Tests", "IStore.Domain.Tests\IStore.Domain.Tests.csproj", "{247BB8BA-8E4D-4CC7-9086-1B995AC1C1A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IStore.Sandbox", "IStore.Sandbox\IStore.Sandbox.csproj", "{CA760E39-CE47-412C-A346-63F235DF270E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IStore.Sandbox", "IStore.Sandbox\IStore.Sandbox.csproj", "{CA760E39-CE47-412C-A346-63F235DF270E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IStore.Data", "IStore.Data\IStore.Data.csproj", "{2A18EE93-A18B-4A0B-B02E-3C63E9107A60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{CA760E39-CE47-412C-A346-63F235DF270E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA760E39-CE47-412C-A346-63F235DF270E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA760E39-CE47-412C-A346-63F235DF270E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A18EE93-A18B-4A0B-B02E-3C63E9107A60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A18EE93-A18B-4A0B-B02E-3C63E9107A60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A18EE93-A18B-4A0B-B02E-3C63E9107A60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A18EE93-A18B-4A0B-B02E-3C63E9107A60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
