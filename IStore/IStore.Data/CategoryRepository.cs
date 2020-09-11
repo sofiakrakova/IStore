@@ -9,8 +9,8 @@ namespace IStore.Data
 {
     public class CategoryRepository : IRepository<Category>
     {
-        public string ConnectionString { get; }
         public string DefaultTableName => "categories";
+        public string ConnectionString { get; }
 
         public CategoryRepository(string connectionString)
         {

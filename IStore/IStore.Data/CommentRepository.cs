@@ -10,8 +10,8 @@ namespace IStore.Data
 {
     public class CommentRepository : IRepository<Comment>
     {
+        public static string DefaultTableName => "comments";
         public string ConnectionString { get; }
-        public string DefaultTableName => "categories";
 
         public CommentRepository(string connectionString)
         {
