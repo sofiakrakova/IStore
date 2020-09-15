@@ -7,12 +7,12 @@ using System.Data;
 
 namespace IStore.Data
 {
-    public class UserRoleRepository : IRepository<UserRole>
+    public class UserRolesRepository : IRepository<UserRole>
     {
         public static string DefaultTableName => "userroles";
         public string ConnectionString { get; }
 
-        public UserRoleRepository(string connectionString)
+        public UserRolesRepository(string connectionString)
         {
             ConnectionString = connectionString;
         }

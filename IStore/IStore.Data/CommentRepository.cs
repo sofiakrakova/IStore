@@ -8,12 +8,12 @@ using System.Linq;
 
 namespace IStore.Data
 {
-    public class CommentRepository : IRepository<Comment>
+    public class CommentsRepository : IRepository<Comment>
     {
         public static string DefaultTableName => "comments";
         public string ConnectionString { get; }
 
-        public CommentRepository(string connectionString)
+        public CommentsRepository(string connectionString)
         {
             ConnectionString = connectionString;
         }

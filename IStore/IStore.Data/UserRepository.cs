@@ -7,12 +7,12 @@ using System.Data;
 
 namespace IStore.Data
 {
-    public class UserRepository : IRepository<User>
+    public class UsersRepository : IRepository<User>
     {
         public static string DefaultTableName => "users";
         public string ConnectionString { get; }
 
-        public UserRepository(string connectionString)
+        public UsersRepository(string connectionString)
         {
             ConnectionString = connectionString;
         }
@@ -35,7 +35,7 @@ namespace IStore.Data
                 var user = connection.QueryFirstOrDefault<User>(query);
                 //TODO: user null check
                 
-                var userRoleQuery = RepositoryUtils.GetByIdQuery(UserRoleRepository.DefaultTableName, user.UserRole_Id);
+                var userRoleQuery = RepositoryUtils.GetByIdQuery(UserRolesRepository.DefaultTableName, user.UserRole_Id);
                 var userRole = connection.QueryFirstOrDefault<UserRole>(userRoleQuery);
 
                 user.UserRole = userRole;

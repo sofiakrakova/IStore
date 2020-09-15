@@ -1,3 +1,5 @@
+using IStore.Data;
+using IStore.Domain;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -18,6 +20,9 @@ namespace IStore.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connString = Configuration.GetConnectionString("Default");
+            services.AddSingleton<IRepository<Category>>(_ => { return new CategoriesRepository(connString); });
+
             services.AddControllersWithViews();
         }
 

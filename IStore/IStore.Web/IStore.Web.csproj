@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\IStore.Data\IStore.Data.csproj" />
     <ProjectReference Include="..\IStore.Logging\IStore.Logging.csproj" />
   </ItemGroup>
 

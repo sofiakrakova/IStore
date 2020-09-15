@@ -7,12 +7,12 @@ using System.Linq;
 
 namespace IStore.Data
 {
-    public class CategoryRepository : IRepository<Category>
+    public class CategoriesRepository : IRepository<Category>
     {
         public string DefaultTableName => "categories";
         public string ConnectionString { get; }
 
-        public CategoryRepository(string connectionString)
+        public CategoriesRepository(string connectionString)
         {
             ConnectionString = connectionString;
         }

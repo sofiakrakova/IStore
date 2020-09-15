@@ -33,28 +33,28 @@ namespace IStore.Sandbox
 
             string pass = "user";
             var b = BCrypt.Net.BCrypt.Verify(pass, hash);
-            //QueryCategories();
-            //QueryUserRoles();
+            QueryCategories();
+            QueryUserRoles();
             QueryUsers();
         }
 
         static void QueryUserRoles()
         {
-            UserRoleRepository userRolesRepository = new UserRoleRepository(connectionString);
+            UserRolesRepository userRolesRepository = new UserRolesRepository(connectionString);
             
             var roles = userRolesRepository.GetAll();
         }
 
         static void QueryUsers()
         {
-            UserRepository usersRepository = new UserRepository(connectionString);
+            UsersRepository usersRepository = new UsersRepository(connectionString);
 
             var user = usersRepository.Get(1);
         }
 
         static void QueryCategories()
         {
-            CategoryRepository categoryRepository = new CategoryRepository(connectionString);
+            CategoriesRepository categoryRepository = new CategoriesRepository(connectionString);
             List<Category> categories = categoryRepository.GetAll().ToList();
 
             var headphones = categories.Single(x => x.Title == "Headphones");

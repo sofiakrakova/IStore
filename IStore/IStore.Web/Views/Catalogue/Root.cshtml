@@ -1,0 +1,31 @@
+﻿@model IStore.Web.Models.Catalogue.CatalogueViewModel
+@{
+  ViewData["Title"] = "Catalogue";
+}
+
+<div class="text-left">
+  <h1 class="display-4">Catalogue</h1>
+</div>
+
+<ul>
+  @foreach (var category in Model.TopCategories)
+  {
+    <li>
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="@category.Id">
+        <label class="custom-control-label" for="@category.Id">@category.Title</label>
+      </div>
+      <ul>
+        @foreach (var child in Model.GetChildCategories(category.Id))
+        {
+        <li>
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="@child.Id">
+            <label class="custom-control-label" for="@child.Id">@child.Title</label>
+          </div>
+        </li>
+        }
+      </ul>
+    </li>
+  }
+</ul>
