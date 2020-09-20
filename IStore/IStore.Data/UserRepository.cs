@@ -7,7 +7,7 @@ using System.Data;
 
 namespace IStore.Data
 {
-    public class UsersRepository : IRepository<User>
+    public class UsersRepository : IUsersRepository
     {
         public static string DefaultTableName => "users";
         public string ConnectionString { get; }
@@ -16,6 +16,9 @@ namespace IStore.Data
         {
             ConnectionString = connectionString;
         }
+
+        #region IRepository<User> members
+
         public void Create(User obj)
         {
             throw new NotImplementedException();
@@ -31,10 +34,10 @@ namespace IStore.Data
             using (IDbConnection connection = new MySqlConnection(ConnectionString))
             {
                 var query = RepositoryUtils.GetByIdQuery(DefaultTableName, id);
-                
+
                 var user = connection.QueryFirstOrDefault<User>(query);
                 //TODO: user null check
-                
+
                 var userRoleQuery = RepositoryUtils.GetByIdQuery(UserRolesRepository.DefaultTableName, user.UserRole_Id);
                 var userRole = connection.QueryFirstOrDefault<UserRole>(userRoleQuery);
 
@@ -52,5 +55,26 @@ namespace IStore.Data
         {
             throw new NotImplementedException();
         }
+        #endregion
+
+        #region IUsersRepository memebers
+
+        public User GetByEmail(string email)
+        {
+            using (IDbConnection connection = new MySqlConnection(ConnectionString))
+            {
+                var query = RepositoryUtils.GetByEmailQuery(DefaultTableName, email);
+
+                var user = connection.QueryFirstOrDefault<User>(query);
+                //TODO: user null check
+
+                var userRoleQuery = RepositoryUtils.GetByIdQuery(UserRolesRepository.DefaultTableName, user.UserRole_Id);
+                var userRole = connection.QueryFirstOrDefault<UserRole>(userRoleQuery);
+
+                user.UserRole = userRole;
+                return user;
+            }
+        }
+        #endregion
     }
 }

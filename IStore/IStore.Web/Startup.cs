@@ -3,8 +3,12 @@ using Autofac.Builder;
 using Autofac.Extensions.DependencyInjection;
 using IStore.Data;
 using IStore.Domain;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,10 +32,22 @@ namespace IStore.Web
             builder.RegisterType<CategoriesRepository>().As<IRepository<Category>>()
                 .WithParameter(new TypedParameter(typeof(string), connString))
                 .SingleInstance();
+
+            builder.RegisterType<UsersRepository>().As<IUsersRepository>()
+                .WithParameter(new TypedParameter(typeof(string), connString))
+                .SingleInstance();
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var connString = Configuration.GetConnectionString("Default");
+
+            services.AddControllersWithViews(x => x.Filters.Add(new AuthorizeFilter()));
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie();
+                //.AddCookie(x=>x.LoginPath = "Account/SignIn");
+
             services.AddOptions();
             services.AddControllersWithViews();
         }
@@ -55,6 +71,13 @@ namespace IStore.Web
 
             app.UseRouting();
 
+            app.UseCookiePolicy(new CookiePolicyOptions()
+            {
+                HttpOnly = HttpOnlyPolicy.Always,
+                Secure = CookieSecurePolicy.Always
+            });
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
