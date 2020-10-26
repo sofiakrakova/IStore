@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\IStore.BusinessLogic\IStore.BusinessLogic.csproj" />
     <ProjectReference Include="..\IStore.Data\IStore.Data.csproj" />
     <ProjectReference Include="..\IStore.Domain\IStore.Domain.csproj" />
   </ItemGroup>

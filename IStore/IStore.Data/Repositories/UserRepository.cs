@@ -1,11 +1,12 @@
 ﻿using Dapper;
+using IStore.Data.Interfaces;
 using IStore.Domain;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
 
-namespace IStore.Data
+namespace IStore.Data.Repositories
 {
     public class UsersRepository : IUsersRepository
     {

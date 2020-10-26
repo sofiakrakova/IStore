@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace IStore.Data
+namespace IStore.Data.Interfaces
 {
     public interface IRepository<T>
     {

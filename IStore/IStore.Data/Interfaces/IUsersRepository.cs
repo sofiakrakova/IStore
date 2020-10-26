@@ -1,6 +1,6 @@
 ﻿using IStore.Domain;
 
-namespace IStore.Data
+namespace IStore.Data.Interfaces
 {
     public interface IUsersRepository : IRepository<User>
     {

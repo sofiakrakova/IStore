@@ -1,5 +1,5 @@
 ﻿using IStore.BusinessLogic.Security;
-using IStore.Data;
+using IStore.Data.Interfaces;
 using IStore.Web.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;

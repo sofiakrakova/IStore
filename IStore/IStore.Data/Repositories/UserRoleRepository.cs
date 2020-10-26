@@ -1,11 +1,12 @@
 ﻿using Dapper;
+using IStore.Data.Interfaces;
 using IStore.Domain;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
 
-namespace IStore.Data
+namespace IStore.Data.Repositories
 {
     public class UserRolesRepository : IRepository<UserRole>
     {
@@ -25,6 +26,7 @@ namespace IStore.Data
         public void Delete(int id)
         {
             throw new NotImplementedException("Unable to delete UserRole directly");
+
         }
 
         public UserRole Get(int id)

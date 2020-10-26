@@ -2,6 +2,8 @@ using Autofac;
 using Autofac.Builder;
 using Autofac.Extensions.DependencyInjection;
 using IStore.Data;
+using IStore.Data.Interfaces;
+using IStore.Data.Repositories;
 using IStore.Domain;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -34,6 +36,10 @@ namespace IStore.Web
                 .SingleInstance();
 
             builder.RegisterType<UsersRepository>().As<IUsersRepository>()
+                .WithParameter(new TypedParameter(typeof(string), connString))
+                .SingleInstance();
+
+            builder.RegisterType<SettingsRepository>().As<ISettingsRepository>()
                 .WithParameter(new TypedParameter(typeof(string), connString))
                 .SingleInstance();
         }

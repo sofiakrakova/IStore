@@ -1,12 +1,11 @@
 ﻿using Dapper;
+using IStore.Data.Interfaces;
 using IStore.Domain;
 using MySql.Data.MySqlClient;
-using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 
-namespace IStore.Data
+namespace IStore.Data.Repositories
 {
     public class CommentsRepository : IRepository<Comment>
     {

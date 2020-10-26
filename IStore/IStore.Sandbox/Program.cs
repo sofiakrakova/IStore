@@ -1,4 +1,6 @@
-﻿using IStore.Data;
+﻿using IStore.BusinessLogic.Security;
+using IStore.Data;
+using IStore.Data.Repositories;
 using IStore.Domain;
 using MySql.Data.MySqlClient;
 using System;
@@ -29,14 +31,43 @@ namespace IStore.Sandbox
         {
             InitConnection();
 
-            string adminPass = "user";
-            var hash = BCrypt.Net.BCrypt.HashPassword(adminPass);
+            //QuerySettings();
 
-            string pass = "user";
-            var b = BCrypt.Net.BCrypt.Verify(pass, hash);
-            QueryUsers();
+            //string adminPass = "user";
+            //var hash = BCrypt.Net.BCrypt.HashPassword(adminPass);
+
+            //string pass = "user";
+            //var b = BCrypt.Net.BCrypt.Verify(pass, hash);
+            //QueryUsers();
             //QueryCategories();
             //QueryUserRoles();
+
+            //DataEncriptionTest();
+        }
+
+        static void DataEncriptionTest()
+        {
+            DataEncryptor dataEncryptor = new DataEncryptor(new SettingsRepository(connectionString));
+
+            string original = "Here is some data to encrypt!";
+
+            byte[] encrypted = dataEncryptor.EncryptString(original);
+
+            string roundtrip = dataEncryptor.DecryptString(encrypted);
+        }
+
+        static void QuerySettings()
+        {
+            SettingsRepository settingsRepository = new SettingsRepository(connectionString);
+
+            var s = settingsRepository.Get(1);
+
+            if (s == null)
+                settingsRepository.Create(new Setting() { Key = "AesIV", Value = "::\"bla'+" });
+
+            s = settingsRepository.GetByKey("AesIV");
+            s.Value += "upd.";
+            settingsRepository.Update(s);
         }
 
         static void QueryUserRoles()

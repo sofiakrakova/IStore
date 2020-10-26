@@ -1,4 +1,5 @@
 ﻿using IStore.Data;
+using IStore.Data.Interfaces;
 using IStore.Domain;
 using IStore.Web.Models.Catalogue;
 using Microsoft.AspNetCore.Mvc;
