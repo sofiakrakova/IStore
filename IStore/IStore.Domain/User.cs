@@ -1,4 +1,6 @@
-﻿using System;
+﻿using IStore.Domain.Enums;
+using System;
+using System.Collections.Specialized;
 
 namespace IStore.Domain
 {
@@ -10,18 +12,8 @@ namespace IStore.Domain
         public string PasswordHash { get; set; }
         public DateTime Birthday { get; set; }
         public string Comment { get; set; }
-        public UserRole UserRole { get; set; }
-        
         public int UserRole_Id { get; set; }
-
-        //public User(string credentials, string email, string passwordHash, DateTime birthday, string comment, int userRole_Id)
-        //{
-        //    Credentials = credentials;
-        //    Email = email;
-        //    PasswordHash = passwordHash;
-        //    Birthday = birthday;
-        //    Comment = comment;
-        //    UserRole_Id = userRole_Id;
-        //}
+        
+        public UserRole UserRole { get; set; }
     }
 }

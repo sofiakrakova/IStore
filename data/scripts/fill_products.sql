@@ -1,6 +1,6 @@
 #Drop data and reset index
-DELETE FROM isoredb.products WHERE id>0;
-ALTER TABLE isoredb.products AUTO_INCREMENT = 1;
+DELETE FROM istoredb.products WHERE id>0;
+ALTER TABLE istoredb.products AUTO_INCREMENT = 1;
 
 INSERT INTO istoredb.products
 VALUES

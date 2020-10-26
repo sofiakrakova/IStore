@@ -1,4 +1,5 @@
-﻿using IStore.Data;
+﻿using IStore.BusinessLogic.Security;
+using IStore.Data;
 using IStore.Web.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -37,7 +38,7 @@ namespace IStore.Web.Controllers
             _logger.LogTrace("Login POST");
 
             var user = _usersRepository.GetByEmail(loginViewModel.Email);
-            if (user == null || !BCrypt.Net.BCrypt.Verify(loginViewModel.Password, user.PasswordHash))
+            if (user == null || !SecurityUtilities.Verify(loginViewModel.Password, user.PasswordHash))
             {
                 _logger.LogWarning("Login failed for " + user.Email);
                 return Unauthorized();

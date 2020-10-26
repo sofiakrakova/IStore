@@ -13,9 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IStore.Sandbox", "IStore.Sa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IStore.Data", "IStore.Data\IStore.Data.csproj", "{2A18EE93-A18B-4A0B-B02E-3C63E9107A60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IStore.Web", "IStore.Web\IStore.Web.csproj", "{5EA1E13A-0B79-492D-8BDA-615A81008B3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IStore.Web", "IStore.Web\IStore.Web.csproj", "{5EA1E13A-0B79-492D-8BDA-615A81008B3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IStore.Logging", "IStore.Logging\IStore.Logging.csproj", "{F46D4BC2-8113-4B90-9A83-DB692CFEDD80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IStore.Logging", "IStore.Logging\IStore.Logging.csproj", "{F46D4BC2-8113-4B90-9A83-DB692CFEDD80}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IStore.BusinessLogic", "IStore.BusinessLogic\IStore.BusinessLogic.csproj", "{F92CF67B-A17F-46A4-9634-B58C121FCBAD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{F46D4BC2-8113-4B90-9A83-DB692CFEDD80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F46D4BC2-8113-4B90-9A83-DB692CFEDD80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F46D4BC2-8113-4B90-9A83-DB692CFEDD80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F92CF67B-A17F-46A4-9634-B58C121FCBAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F92CF67B-A17F-46A4-9634-B58C121FCBAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F92CF67B-A17F-46A4-9634-B58C121FCBAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F92CF67B-A17F-46A4-9634-B58C121FCBAD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
