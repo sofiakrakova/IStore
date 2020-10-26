@@ -1,5 +1,6 @@
 ﻿using IStore.Data;
 using IStore.Domain;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -33,15 +34,15 @@ namespace IStore.Sandbox
 
             string pass = "user";
             var b = BCrypt.Net.BCrypt.Verify(pass, hash);
-            QueryCategories();
-            QueryUserRoles();
             QueryUsers();
+            //QueryCategories();
+            //QueryUserRoles();
         }
 
         static void QueryUserRoles()
         {
             UserRolesRepository userRolesRepository = new UserRolesRepository(connectionString);
-            
+
             var roles = userRolesRepository.GetAll();
         }
 
@@ -49,7 +50,20 @@ namespace IStore.Sandbox
         {
             UsersRepository usersRepository = new UsersRepository(connectionString);
 
-            var user = usersRepository.Get(1);
+            User nUser = new User()
+            {
+                Email = "deliseeva@istore.com",
+                Birthday = new DateTime(1990, 10, 4),
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword("querty123"),
+                Credentials = "Daria Eliseeva",
+                Comment = "Senior manager of \"Abby Tech\" Inc.",
+                UserRole_Id = 2 //user
+            };
+            usersRepository.Create(nUser);
+
+            //var nUserGet = usersRepository.GetByEmail("newcomer@istore.com");
+
+            //var user = usersRepository.Get(1);
         }
 
         static void QueryCategories()

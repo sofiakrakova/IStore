@@ -1,4 +1,6 @@
-﻿namespace IStore.Data
+﻿using System;
+
+namespace IStore.Data
 {
     public static class RepositoryUtils
     {
@@ -17,6 +19,11 @@
         public static string DeleteByIdQuery(string tableName, int id, string idColumnName = "id")
         {
             return $"DELETE FROM {tableName} WHERE {idColumnName}={id}";
+        }
+
+        public static string DateTimeToString(DateTime dateTime)
+        {
+            return dateTime.ToString("yyyy-MM-dd H:mm:ss");
         }
     }
 }

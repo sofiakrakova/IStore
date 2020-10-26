@@ -21,12 +21,20 @@ namespace IStore.Data
 
         public void Create(User obj)
         {
-            throw new NotImplementedException();
+            using (IDbConnection connection = new MySqlConnection(ConnectionString))
+            {
+                var query = $"INSERT INTO {DefaultTableName} VALUE(NULL, '{obj.Credentials}', '{obj.Email}', '{obj.PasswordHash}', '{RepositoryUtils.DateTimeToString(obj.Birthday)}', '{MySqlHelper.EscapeString(obj.Comment)}', {obj.UserRole_Id});";
+                var affectedRows = connection.Execute(query);
+            }
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            using (IDbConnection connection = new MySqlConnection(ConnectionString))
+            {
+                var query = RepositoryUtils.DeleteByIdQuery(DefaultTableName, id);
+                var affectedRows = connection.Execute(query);
+            }
         }
 
         public User Get(int id)
@@ -48,12 +56,23 @@ namespace IStore.Data
 
         public IEnumerable<User> GetAll()
         {
-            throw new NotImplementedException();
+            using (IDbConnection connection = new MySqlConnection(ConnectionString))
+            {
+                var query = RepositoryUtils.GetAllQuery(DefaultTableName);
+                return connection.Query<User>(query);
+            }
         }
-
         public void Update(User obj)
         {
-            throw new NotImplementedException();
+            using (IDbConnection connection = new MySqlConnection(ConnectionString))
+            {
+                var query = $@"UPDATE {DefaultTableName} 
+SET credentials={obj.Credentials}, birthday='{obj.Birthday}', passwordhash={obj.PasswordHash}, comment={obj.Comment}, userrole=
+{obj.UserRole};
+WHERE id={obj.Id};";
+
+                var affectedRows = connection.Execute(query);
+            }
         }
         #endregion
 
