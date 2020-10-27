@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace IStore.Domain
 {
-    public class OrderDetails
+    public class Order
     {
         public int Id { get; set; }
         public int User_Id { get; set; }
@@ -14,5 +15,6 @@ namespace IStore.Domain
         public DateTime DeliveryDate { get; set; }
 
         public User User { get; set; }
+        public IEnumerable<OrderItem> OrderItems { get; set; }
     }
 }

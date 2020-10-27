@@ -6,7 +6,6 @@
         public int Category_Id { get; set; }
         public int AmountPercent { get; set; }
 
-
         public Category Category { get; set; }
     }
 }

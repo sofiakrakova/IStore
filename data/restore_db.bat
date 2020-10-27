@@ -6,4 +6,5 @@ set password=admin
 %mysql% -u root --password=%password% istoredb < scripts\fill_default_users.sql
 %mysql% -u root --password=%password% istoredb < scripts\fill_suppliers.sql
 %mysql% -u root --password=%password% istoredb < scripts\fill_products.sql
+%mysql% -u root --password=%password% istoredb < scripts\fill_supplier_products.sql
 pause

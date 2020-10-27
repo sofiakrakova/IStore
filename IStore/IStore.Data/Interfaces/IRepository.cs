@@ -4,10 +4,13 @@ namespace IStore.Data.Interfaces
 {
     public interface IRepository<T>
     {
-        void Create(T obj);
+        string TableName { get; }
+        string ConnectionString { get; }
+
+        int Create(T obj);
         T Get(int id);
         IEnumerable<T> GetAll();
-        void Update(T obj);
-        void Delete(int id);
+        int Update(T obj);
+        int Delete(int id);
     }
 }

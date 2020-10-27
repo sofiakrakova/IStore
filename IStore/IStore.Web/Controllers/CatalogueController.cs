@@ -1,6 +1,4 @@
-﻿using IStore.Data;
-using IStore.Data.Interfaces;
-using IStore.Domain;
+﻿using IStore.Data.Interfaces;
 using IStore.Web.Models.Catalogue;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -10,9 +8,9 @@ namespace IStore.Web.Controllers
     public class CatalogueController : Controller
     {
         private readonly ILogger<CatalogueController> _logger;
-        private readonly IRepository<Category> _categoriesRepository;
+        private readonly ICategoriesRepository _categoriesRepository;
 
-        public CatalogueController(IRepository<Category> categoriesRepository, ILogger<CatalogueController> logger)
+        public CatalogueController(ICategoriesRepository categoriesRepository, ILogger<CatalogueController> logger)
         {
             _logger = logger;
             _categoriesRepository = categoriesRepository;

@@ -2,6 +2,7 @@
 using IStore.Data;
 using IStore.Data.Repositories;
 using IStore.Domain;
+using IStore.Domain.Enums;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -31,8 +32,9 @@ namespace IStore.Sandbox
         {
             InitConnection();
 
+            //QuerySupplierProducts();
             //QuerySettings();
-
+            //QueryProducts();
             //string adminPass = "user";
             //var hash = BCrypt.Net.BCrypt.HashPassword(adminPass);
 
@@ -47,7 +49,7 @@ namespace IStore.Sandbox
 
         static void DataEncriptionTest()
         {
-            DataEncryptor dataEncryptor = new DataEncryptor(new SettingsRepository(connectionString));
+            DataEncryptor dataEncryptor = new DataEncryptor(new SettingsRepository(connectionString, "settings"));
 
             string original = "Here is some data to encrypt!";
 
@@ -58,7 +60,7 @@ namespace IStore.Sandbox
 
         static void QuerySettings()
         {
-            SettingsRepository settingsRepository = new SettingsRepository(connectionString);
+            SettingsRepository settingsRepository = new SettingsRepository(connectionString, "settings");
 
             var s = settingsRepository.Get(1);
 
@@ -72,34 +74,54 @@ namespace IStore.Sandbox
 
         static void QueryUserRoles()
         {
-            UserRolesRepository userRolesRepository = new UserRolesRepository(connectionString);
+            UserRolesRepository userRolesRepository = new UserRolesRepository(connectionString, "userroles");
 
             var roles = userRolesRepository.GetAll();
         }
 
+        static void QueryProducts()
+        {
+            ProductsRepository productsRepository = new ProductsRepository(connectionString, "products");
+
+            var products = productsRepository.GetAll();
+        }
+
+        static void QuerySupplierProducts()
+        {
+            SupplierProductsRepository supplierProductRepository = new SupplierProductsRepository(connectionString, "supplier_products");
+
+            var supplierProducts = supplierProductRepository.GetAll();
+        }
+
         static void QueryUsers()
         {
-            UsersRepository usersRepository = new UsersRepository(connectionString);
+            UsersRepository usersRepository = new UsersRepository(connectionString, "users");
 
-            User nUser = new User()
+            //get
+            var users = usersRepository.GetAll();
+            var admin = usersRepository.GetByEmail("admin@istore.com");
+            var daria = usersRepository.Get(3);
+
+            //create
+            User tempUser = new User()
             {
-                Email = "deliseeva@istore.com",
+                Email = "temp@istore.com",
                 Birthday = new DateTime(1990, 10, 4),
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword("querty123"),
-                Credentials = "Daria Eliseeva",
-                Comment = "Senior manager of \"Abby Tech\" Inc.",
-                UserRole_Id = 2 //user
+                Credentials = "Temp Temp",
+                Comment = "Comment",
+                UserRole_Id = (int)UserRoleType.User
             };
-            usersRepository.Create(nUser);
+            var affectedRows1 = usersRepository.Create(tempUser);
 
-            //var nUserGet = usersRepository.GetByEmail("newcomer@istore.com");
-
-            //var user = usersRepository.Get(1);
+            //delete
+            var temp = usersRepository.GetByEmail("temp@istore.com");
+            var affectedRows2 = usersRepository.Delete(temp.Id);
         }
 
         static void QueryCategories()
         {
-            CategoriesRepository categoryRepository = new CategoriesRepository(connectionString);
+            CategoriesRepository categoryRepository = new CategoriesRepository(connectionString, "categories");
             List<Category> categories = categoryRepository.GetAll().ToList();
 
             var headphones = categories.Single(x => x.Title == "Headphones");

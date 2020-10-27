@@ -29,18 +29,26 @@ namespace IStore.Web
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            var connString = Configuration.GetConnectionString("Default");
+            RegisterDataAccess(builder);
+        }
 
-            builder.RegisterType<CategoriesRepository>().As<IRepository<Category>>()
-                .WithParameter(new TypedParameter(typeof(string), connString))
+        private void RegisterDataAccess(ContainerBuilder builder)
+        {
+            var connectionString = Configuration.GetConnectionString("Default");
+
+            builder.RegisterType<CategoriesRepository>().As<ICategoriesRepository>()
+                .WithParameter(new PositionalParameter(0, connectionString))
+                .WithParameter(new PositionalParameter(1, "categories"))
                 .SingleInstance();
 
             builder.RegisterType<UsersRepository>().As<IUsersRepository>()
-                .WithParameter(new TypedParameter(typeof(string), connString))
+                .WithParameter(new PositionalParameter(0, connectionString))
+                .WithParameter(new PositionalParameter(1, "users"))
                 .SingleInstance();
 
             builder.RegisterType<SettingsRepository>().As<ISettingsRepository>()
-                .WithParameter(new TypedParameter(typeof(string), connString))
+                .WithParameter(new PositionalParameter(0, connectionString))
+                .WithParameter(new PositionalParameter(1, "settings"))
                 .SingleInstance();
         }
 

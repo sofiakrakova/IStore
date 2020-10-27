@@ -2,12 +2,15 @@
 using log4net.Core;
 using MySql.Data.MySqlClient;
 using System.Data;
+using Dapper;
 using System.Data.Common;
 
 namespace IStore.Logging
 {
     public class MySqlAppender : AppenderSkeleton
     {
+        const string LOG_TABLE = "log";
+
         public string ConnectionString { get; private set; }
         public string Server { get; set; }
         public string Database { get; set; }
@@ -32,13 +35,15 @@ namespace IStore.Logging
         {
             using (IDbConnection connection = new MySqlConnection(ConnectionString))
             {
-                MySqlCommand command = new MySqlCommand(
-                    $"INSERT INTO log VALUE(NULL, '{loggingEvent.TimeStamp.ToString("yyyy-MM-dd H:mm:ss")}', '{loggingEvent.Level}', '{loggingEvent.LoggerName}', '{loggingEvent.RenderedMessage}');");
-                
-                command.Connection = (MySqlConnection)connection;
-                command.Connection.Open();
-                int affectedRows = command.ExecuteNonQuery();
-                command.Connection.Close();
+                var query = $@"INSERT INTO {LOG_TABLE} VALUE(NULL, @time, @level, @logger, @message);";
+                int affectedRows = connection.Execute(query,
+                    new
+                    {
+                        time = loggingEvent.TimeStamp,
+                        level = loggingEvent.Level.DisplayName,
+                        logger = loggingEvent.LoggerName,
+                        message = loggingEvent.RenderedMessage
+                    });
             }
         }
     }
