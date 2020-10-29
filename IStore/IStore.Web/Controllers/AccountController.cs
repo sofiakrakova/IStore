@@ -81,11 +81,9 @@ namespace IStore.Web.Controllers
         [AllowAnonymous]
         public IActionResult Register(RegistrationViewModel registrationViewModel)
         {
+            //if valid
             if (ModelState.IsValid)
             {
-                return RedirectToAction("Login");
-
-                //if valid
                 var newUser = _usersManagementService.CreateNew(
                     registrationViewModel.Credentials,
                     registrationViewModel.Email,
@@ -94,6 +92,8 @@ namespace IStore.Web.Controllers
                     registrationViewModel.About);
 
                 //check if newUser created successfully
+
+                return RedirectToAction("Login");
             }
 
             return View("Register");
