@@ -1,6 +1,8 @@
 using Autofac;
 using Autofac.Builder;
+using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
+using IStore.BusinessLogic.Services;
 using IStore.Data;
 using IStore.Data.Interfaces;
 using IStore.Data.Repositories;
@@ -36,6 +38,8 @@ namespace IStore.Web
         {
             var connectionString = Configuration.GetConnectionString("Default");
 
+            #region IRepository<T> DI
+
             builder.RegisterType<CategoriesRepository>().As<ICategoriesRepository>()
                 .WithParameter(new PositionalParameter(0, connectionString))
                 .WithParameter(new PositionalParameter(1, "categories"))
@@ -50,6 +54,13 @@ namespace IStore.Web
                 .WithParameter(new PositionalParameter(0, connectionString))
                 .WithParameter(new PositionalParameter(1, "settings"))
                 .SingleInstance();
+            #endregion
+
+            #region Services DI
+
+            builder.RegisterType<UsersManagementService>().As<IUsersManagementService>().SingleInstance();
+            builder.RegisterType<DatabaseSettingsService>().As<IDatabaseSettingsService>().SingleInstance();
+            #endregion
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -60,7 +71,6 @@ namespace IStore.Web
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie();
-                //.AddCookie(x=>x.LoginPath = "Account/SignIn");
 
             services.AddOptions();
             services.AddControllersWithViews();

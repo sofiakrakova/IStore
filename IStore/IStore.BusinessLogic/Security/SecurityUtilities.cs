@@ -1,10 +1,17 @@
 ﻿namespace IStore.BusinessLogic.Security
 {
-    public static class SecurityUtilities
+    internal static class SecurityUtilities
     {
         public static bool Verify(string text, string hash)
         {
-            return BCrypt.Net.BCrypt.Verify(text, hash);
+            try
+            {
+                return BCrypt.Net.BCrypt.Verify(text, hash);
+            }
+            catch (BCrypt.Net.SaltParseException)
+            {
+                return false;
+            }
         }
 
         public static string Hash(string text)

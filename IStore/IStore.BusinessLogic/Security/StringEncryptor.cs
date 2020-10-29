@@ -3,11 +3,10 @@ using IStore.Domain;
 using System;
 using System.IO;
 using System.Security.Cryptography;
-using System.Text;
 
 namespace IStore.BusinessLogic.Security
 {
-    public class DataEncryptor
+    public class StringEncryptor : IStringEncryptor
     {
         const string AES_KEY = "AesKey";
         const string AES_IV = "AesIV";
@@ -17,24 +16,28 @@ namespace IStore.BusinessLogic.Security
         private byte[] _aesKey;
         private byte[] _aesIV;
 
-        public DataEncryptor(ISettingsRepository settingsRepository)
+        public StringEncryptor(ISettingsRepository settingsRepository)
         {
             _settingsRepository = settingsRepository;
 
             var aesKeySetting = settingsRepository.GetByKey(AES_KEY);
             var aesIVSetting = settingsRepository.GetByKey(AES_IV);
 
-            if (aesKeySetting == null && aesIVSetting == null)
-            {
-                ConfigureAesSettings();
-            }
-            else
-            {
-                _aesKey = Convert.FromBase64String(aesKeySetting.Value);
-                _aesIV = Convert.FromBase64String(aesIVSetting.Value);
-            }
+            _aesKey = Convert.FromBase64String(aesKeySetting.SettingValue);
+            _aesIV = Convert.FromBase64String(aesIVSetting.SettingValue);
+
+            //if (aesKeySetting == null && aesIVSetting == null)
+            //{
+            //    ConfigureAesSettings();
+            //}
+            //else
+            //{
+            //    _aesKey = Convert.FromBase64String(aesKeySetting.SettingValue);
+            //    _aesIV = Convert.FromBase64String(aesIVSetting.SettingValue);
+            //}
         }
 
+        [Obsolete]
         private void ConfigureAesSettings()
         {
             Setting aesKeySetting;
@@ -42,8 +45,8 @@ namespace IStore.BusinessLogic.Security
 
             using (var aes = Aes.Create())
             {
-                aesKeySetting = new Setting() { Key = AES_KEY, Value = Convert.ToBase64String(aes.Key) };
-                aesIVSetting = new Setting() { Key = AES_IV, Value = Convert.ToBase64String(aes.IV) };
+                aesKeySetting = new Setting() { SettingKey = AES_KEY, SettingValue = Convert.ToBase64String(aes.Key) };
+                aesIVSetting = new Setting() { SettingKey = AES_IV, SettingValue = Convert.ToBase64String(aes.IV) };
 
                 _aesKey = new byte[aes.Key.Length];
                 _aesIV = new byte[aes.IV.Length];
@@ -55,7 +58,7 @@ namespace IStore.BusinessLogic.Security
             _settingsRepository.Create(aesIVSetting);
         }
 
-        public byte[] EncryptString(string text)
+        public string EncryptString(string plain)
         {
             byte[] encryptedData;
 
@@ -71,17 +74,18 @@ namespace IStore.BusinessLogic.Security
                 {
                     using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
                     {
-                        swEncrypt.Write(text);
+                        swEncrypt.Write(plain);
                     }
                     encryptedData = msEncrypt.ToArray();
                 }
             }
 
-            return encryptedData;
+            return Convert.ToBase64String(encryptedData);
         }
 
-        public string DecryptString(byte[] data)
+        public string DecryptString(string encrypted)
         {
+            byte[] data = Convert.FromBase64String(encrypted);
             string plainText = null;
 
             using (Aes aesAlg = Aes.Create())

@@ -1,11 +1,11 @@
-﻿using IStore.BusinessLogic.Security;
-using IStore.Data.Interfaces;
+﻿using IStore.BusinessLogic.Services;
 using IStore.Web.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 
@@ -14,12 +14,12 @@ namespace IStore.Web.Controllers
     public class AccountController : Controller
     {
         private readonly ILogger<AccountController> _logger;
-        private readonly IUsersRepository _usersRepository;
-
-        public AccountController(IUsersRepository usersRepository, ILogger<AccountController> logger)
+        private readonly IUsersManagementService _usersManagementService;
+        
+        public AccountController(IUsersManagementService usersManagementService, ILogger<AccountController> logger)
         {
             _logger = logger;
-            _usersRepository = usersRepository;
+            _usersManagementService = usersManagementService;
         }
 
         [AllowAnonymous]
@@ -27,7 +27,7 @@ namespace IStore.Web.Controllers
         {
             _logger.LogTrace("Login GET with returnUrl: " + returnUrl);
 
-            return View(new LoginViewModel { ReturnUrl = returnUrl });
+            return View("Login", new LoginViewModel { ReturnUrl = returnUrl });
         }
 
         [HttpPost]
@@ -37,8 +37,8 @@ namespace IStore.Web.Controllers
         {
             _logger.LogTrace("Login POST");
 
-            var user = _usersRepository.GetByEmail(loginViewModel.Email);
-            if (user == null || !SecurityUtilities.Verify(loginViewModel.Password, user.PasswordHash))
+            var user = _usersManagementService.GetByEmail(loginViewModel.Email);
+            if (user == null || !_usersManagementService.VerifyPassword(loginViewModel.Password, user.PasswordHash))
             {
                 _logger.LogWarning("Login failed for " + user.Email);
                 return Unauthorized();
@@ -67,6 +67,31 @@ namespace IStore.Web.Controllers
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return Redirect("/");
+        }
+
+        [AllowAnonymous]
+        public IActionResult Register(string returnUrl = "/")
+        {
+            _logger.LogTrace("Registration GET with returnUrl: " + returnUrl);
+
+            return View("Registration", new RegistrationViewModel { ReturnUrl = returnUrl });
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult Register(RegistrationViewModel registrationViewModel)
+        {
+            //if valid
+            var newUser = _usersManagementService.CreateNew(
+                registrationViewModel.Credentials,
+                registrationViewModel.Email,
+                registrationViewModel.Password,
+                DateTime.Now,
+                registrationViewModel.About);
+
+            //check if newUser created successfully
+
+            return View("Login");
         }
     }
 }

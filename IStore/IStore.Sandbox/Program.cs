@@ -1,5 +1,7 @@
 ﻿using IStore.BusinessLogic.Security;
+using IStore.BusinessLogic.Services;
 using IStore.Data;
+using IStore.Data.Interfaces;
 using IStore.Data.Repositories;
 using IStore.Domain;
 using IStore.Domain.Enums;
@@ -40,22 +42,11 @@ namespace IStore.Sandbox
 
             //string pass = "user";
             //var b = BCrypt.Net.BCrypt.Verify(pass, hash);
-            //QueryUsers();
+            QueryUsers();
             //QueryCategories();
             //QueryUserRoles();
 
             //DataEncriptionTest();
-        }
-
-        static void DataEncriptionTest()
-        {
-            DataEncryptor dataEncryptor = new DataEncryptor(new SettingsRepository(connectionString, "settings"));
-
-            string original = "Here is some data to encrypt!";
-
-            byte[] encrypted = dataEncryptor.EncryptString(original);
-
-            string roundtrip = dataEncryptor.DecryptString(encrypted);
         }
 
         static void QuerySettings()
@@ -65,10 +56,10 @@ namespace IStore.Sandbox
             var s = settingsRepository.Get(1);
 
             if (s == null)
-                settingsRepository.Create(new Setting() { Key = "AesIV", Value = "::\"bla'+" });
+                settingsRepository.Create(new Setting() { SettingKey = "AesIV", SettingValue = "::\"bla'+" });
 
             s = settingsRepository.GetByKey("AesIV");
-            s.Value += "upd.";
+            s.SettingValue += "upd.";
             settingsRepository.Update(s);
         }
 
@@ -95,28 +86,41 @@ namespace IStore.Sandbox
 
         static void QueryUsers()
         {
-            UsersRepository usersRepository = new UsersRepository(connectionString, "users");
+            IUsersRepository usersRepository = new UsersRepository(connectionString, "users");
+            ISettingsRepository settingsRepository = new SettingsRepository(connectionString, "settings");
+            IUsersManagementService usersManagementService = new UsersManagementService(
+                usersRepository,
+                settingsRepository);
+
+            //create default
+            //usersManagementService.CreateNew(
+            //    "Test Administrator",
+            //    "admin@istore.com",
+            //    "$2b$10$n45gXcwVp4Niyr385xh.CevsQWP3xRNCck/fLJ6Honn4URJMV6VgK",
+            //    DateTime.Now,
+            //    "Administrator account for test purposes");
+
+            //usersManagementService.CreateNew(
+            //    "Test User",
+            //    "user@istore.com",
+            //    "$2b$10$Jme/D8ENr09qQYcydWHknOQ2LA0RoUYPLJjfKiTjkWW3I5jdgkdnu",
+            //    DateTime.Now,
+            //    "User account for test purposes");
 
             //get
-            var users = usersRepository.GetAll();
-            var admin = usersRepository.GetByEmail("admin@istore.com");
-            var daria = usersRepository.Get(3);
+            var admin = usersManagementService.GetByEmail("admin@istore.com");
 
             //create
-            User tempUser = new User()
-            {
-                Email = "temp@istore.com",
-                Birthday = new DateTime(1990, 10, 4),
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword("querty123"),
-                Credentials = "Temp Temp",
-                Comment = "Comment",
-                UserRole_Id = (int)UserRoleType.User
-            };
-            var affectedRows1 = usersRepository.Create(tempUser);
+            User alreadyCreatedUser = usersManagementService.CreateNew(
+                "Temp User",
+                "temp@istore.com",
+                "querty123",
+                new DateTime(1990, 10, 4),
+                "Comment");
 
             //delete
-            var temp = usersRepository.GetByEmail("temp@istore.com");
-            var affectedRows2 = usersRepository.Delete(temp.Id);
+            var temp = usersManagementService.GetByEmail("temp@istore.com");
+            usersManagementService.Delete(temp.Email);
         }
 
         static void QueryCategories()

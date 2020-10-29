@@ -53,7 +53,7 @@ namespace IStore.Data.Repositories
             using (IDbConnection connection = new MySqlConnection(ConnectionString))
             {
                 var query = $@"UPDATE {TableName} 
-                               SET `key` = @key, value = @value
+                               SET settingkey = @key, settingvalue = @value
                                WHERE id = @id;";
                 var affectedRows = connection.Execute(query, obj);
                 return affectedRows;
@@ -67,7 +67,7 @@ namespace IStore.Data.Repositories
         {
             using (IDbConnection connection = new MySqlConnection(ConnectionString))
             {
-                var query = $"SELECT * FROM {TableName} WHERE `key` = @key";
+                var query = $"SELECT * FROM {TableName} WHERE settingkey = @key";
                 return connection.QueryFirstOrDefault<Setting>(query, new { key });
             }
         }

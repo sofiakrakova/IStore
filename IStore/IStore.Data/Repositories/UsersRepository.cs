@@ -52,8 +52,8 @@ namespace IStore.Data.Repositories
                 {
                     user.UserRole = userrole;
                     return user;
-                }, 
-                splitOn: "id", 
+                },
+                splitOn: "id",
                 param: new { id });
 
                 return result.SingleOrDefault();
@@ -72,7 +72,7 @@ namespace IStore.Data.Repositories
                 {
                     user.UserRole = userrole;
                     return user;
-                }, 
+                },
                 splitOn: "id");
             }
         }
@@ -82,7 +82,13 @@ namespace IStore.Data.Repositories
             using (IDbConnection connection = new MySqlConnection(ConnectionString))
             {
                 var query = $@"UPDATE {TableName} 
-                            SET credentials = @credentials, birthday = @birthday, passwordhash = @passwordhash, comment = @comment, userrole = @userrole;
+                            SET 
+                                credentials = @credentials, 
+                                email = @email, 
+                                passwordhash = @passwordhash, 
+                                birthday = @birthday, 
+                                comment = @comment, 
+                                userrole = @userrole;
                             WHERE id = @id;";
 
                 var affectedRows = connection.Execute(query, obj);
@@ -106,8 +112,8 @@ namespace IStore.Data.Repositories
                 {
                     user.UserRole = userrole;
                     return user;
-                }, 
-                splitOn: "id", 
+                },
+                splitOn: "id",
                 param: new { email });
 
                 return result.SingleOrDefault();
