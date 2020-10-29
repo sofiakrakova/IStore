@@ -74,24 +74,29 @@ namespace IStore.Web.Controllers
         {
             _logger.LogTrace("Registration GET with returnUrl: " + returnUrl);
 
-            return View("Registration", new RegistrationViewModel { ReturnUrl = returnUrl });
+            return View("Registration", new RegistrationViewModel());
         }
 
         [HttpPost]
         [AllowAnonymous]
         public IActionResult Register(RegistrationViewModel registrationViewModel)
         {
-            //if valid
-            var newUser = _usersManagementService.CreateNew(
-                registrationViewModel.Credentials,
-                registrationViewModel.Email,
-                registrationViewModel.Password,
-                DateTime.Now,
-                registrationViewModel.About);
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("Login");
 
-            //check if newUser created successfully
+                //if valid
+                var newUser = _usersManagementService.CreateNew(
+                    registrationViewModel.Credentials,
+                    registrationViewModel.Email,
+                    registrationViewModel.Password,
+                    DateTime.Now,
+                    registrationViewModel.About);
 
-            return View("Login");
+                //check if newUser created successfully
+            }
+
+            return View("Register");
         }
     }
 }

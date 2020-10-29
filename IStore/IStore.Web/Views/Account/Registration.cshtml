@@ -3,22 +3,36 @@
   ViewData["Title"] = "Registration";
 }
 
-<div class="col-md-4 offset-md-4">
-  <h2 class="form-text text-center">Register</h2>
+<div class="col-md-6 offset-md-3 border rounded bg-light">
+  <h2 class="form-text text-center">Welcome to IStore</h2>
   <form asp-action="Register">
-    <input type="hidden" asp-for="ReturnUrl" />
-
     <div class="form-group">
-      <input type="text" class="form-control" asp-for="Credentials" placeholder="Full Name">
-      <input type="email" class="form-control" asp-for="Email" placeholder="Email">
+      <label for="credentialsInput">Full Name *</label>
+      <input id="credentialsInput" class="form-control" asp-for="Credentials" required>
     </div>
     <div class="form-group">
-      <input type="password" class="form-control" placeholder="Password" asp-for="Password">
-      <input type="password" class="form-control" placeholder="Confirm Password" asp-for="PasswordConfirmation">
+      <label for="emailInput">Email address *</label>
+      <input id="emailInput" class="form-control" asp-for="Email" required>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputPassword">Password *</label>
+        <input id="inputPassword" class="form-control" asp-for="Password" required>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputPassword">Confirm Password *</label>
+        <input for="inputPasswordConfirm" class="form-control" asp-for="PasswordConfirmation" required>
+      </div>
     </div>
     <div class="form-group">
-      <textarea rows="4" placeholder="About" asp-for="About"></textarea>
-      <button type="submit" class="btn btn-primary">Create</button>
+      <label for="aboutInput">About</label>
+      <textarea id="aboutInput" class="form-control" asp-for="About" aria-describedby="aboutInputHelp"></textarea>
+      <small id="aboutInputHelp" class="form-text text-muted">
+        Write a short bio if you wish
+      </small>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Create account</button>
     </div>
   </form>
 </div>
