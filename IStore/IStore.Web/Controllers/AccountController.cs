@@ -15,7 +15,7 @@ namespace IStore.Web.Controllers
     {
         private readonly ILogger<AccountController> _logger;
         private readonly IUsersManagementService _usersManagementService;
-        
+
         public AccountController(IUsersManagementService usersManagementService, ILogger<AccountController> logger)
         {
             _logger = logger;
@@ -23,7 +23,7 @@ namespace IStore.Web.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult Login(string returnUrl= "/")
+        public IActionResult Login(string returnUrl = "/")
         {
             _logger.LogTrace("Login GET with returnUrl: " + returnUrl);
 
@@ -35,8 +35,6 @@ namespace IStore.Web.Controllers
         //TODO: Think about making it async
         public IActionResult Login(LoginViewModel loginViewModel)
         {
-            _logger.LogTrace("Login POST");
-
             var user = _usersManagementService.GetByEmail(loginViewModel.Email);
             if (user == null || !_usersManagementService.VerifyPassword(loginViewModel.Password, user.PasswordHash))
             {
@@ -45,11 +43,11 @@ namespace IStore.Web.Controllers
             }
 
             var claims = new List<Claim>()
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, user.UserRole.Title),
-            };
+                {
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.Email, user.Email),
+                    new Claim(ClaimTypes.Role, user.UserRole.Title),
+                };
 
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var principal = new ClaimsPrincipal(identity);
@@ -59,7 +57,6 @@ namespace IStore.Web.Controllers
                 principal,
                 new AuthenticationProperties { IsPersistent = loginViewModel.RememberMe });
 
-            //Protect against Open Redirection attacks
             return LocalRedirect(loginViewModel.ReturnUrl);
         }
 
@@ -91,7 +88,7 @@ namespace IStore.Web.Controllers
                     DateTime.Now,
                     registrationViewModel.About);
 
-                //check if newUser created successfully
+                //TODO: check if newUser created successfully
 
                 return RedirectToAction("Login");
             }

@@ -10,7 +10,6 @@ namespace IStore.Web.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
         
-        [Url]
         public string ReturnUrl { get; set; }
         
         public bool RememberMe { get; set; }
