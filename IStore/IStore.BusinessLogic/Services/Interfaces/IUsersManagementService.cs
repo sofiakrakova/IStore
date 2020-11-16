@@ -1,7 +1,7 @@
 ﻿using IStore.Domain;
 using System;
 
-namespace IStore.BusinessLogic.Services
+namespace IStore.BusinessLogic.Services.Interfaces
 {
     public interface IUsersManagementService
     {

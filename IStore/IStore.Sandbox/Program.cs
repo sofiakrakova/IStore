@@ -1,5 +1,6 @@
 ﻿using IStore.BusinessLogic.Security;
 using IStore.BusinessLogic.Services;
+using IStore.BusinessLogic.Services.Interfaces;
 using IStore.Data;
 using IStore.Data.Interfaces;
 using IStore.Data.Repositories;

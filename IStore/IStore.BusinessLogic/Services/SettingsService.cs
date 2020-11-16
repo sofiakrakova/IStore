@@ -1,16 +1,17 @@
-﻿using IStore.Data.Interfaces;
+﻿using IStore.BusinessLogic.Services.Interfaces;
+using IStore.Data.Interfaces;
 using IStore.Domain;
 using System;
 
 namespace IStore.BusinessLogic.Services
 {
-    public class DatabaseSettingsService : IDatabaseSettingsService
+    public class SettingsService : ISettingsService
     {
         private readonly ISettingsRepository _settingsRepository;
 
-        public DatabaseSettingsService(ISettingsRepository settingsRepository)
+        public SettingsService(ISettingsRepository settingsRepository)
         {
-            _settingsRepository = settingsRepository ?? throw new ArgumentException(nameof(settingsRepository));
+            Protector.SetIfNotNull(ref _settingsRepository, settingsRepository);
         }
 
         public Setting Add(string key, string value)
@@ -22,7 +23,7 @@ namespace IStore.BusinessLogic.Services
                 throw new Exception($"Key '{key}' already exists.");
 
             Setting newSetting = new Setting() { SettingKey = key, SettingValue = value };
-            
+
             _settingsRepository.Create(newSetting);
 
             return _settingsRepository.GetByKey(newSetting.SettingKey);

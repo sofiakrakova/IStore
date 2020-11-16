@@ -1,4 +1,5 @@
 ﻿using IStore.BusinessLogic.Security;
+using IStore.BusinessLogic.Services.Interfaces;
 using IStore.Data.Interfaces;
 using IStore.Domain;
 using IStore.Domain.Enums;
@@ -14,8 +15,8 @@ namespace IStore.BusinessLogic.Services
 
         public UsersManagementService(IUsersRepository usersRepository, ISettingsRepository settingsRepository)
         {
-            _usersRepository = usersRepository ?? throw new ArgumentNullException(nameof(usersRepository));
-            _settingsRepository = settingsRepository ?? throw new ArgumentNullException(nameof(settingsRepository));
+            Protector.SetIfNotNull(ref _usersRepository, usersRepository);
+            Protector.SetIfNotNull(ref _settingsRepository, settingsRepository);
 
             _encryptor = new StringEncryptor(_settingsRepository);
         }

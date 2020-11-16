@@ -22,12 +22,19 @@
           <ul class="navbar-nav flex-grow-1">
             @if (User.Identity.IsAuthenticated && User.HasClaim(ClaimTypes.Role, "Administrator"))
             {
-              <li class="nav-item">
-                <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Administration</a>
+              <li class="nav-item dropdown">
+                <a class="nav-link text-dark dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Administration
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" asp-controller="Administration" asp-action="Index">Catalog Management</a>
+                  <a class="dropdown-item" asp-controller="Administration" asp-action="Index">Order Management</a>
+                  <a class="dropdown-item" asp-controller="Administration" asp-action="CheckIn">Check In</a>
+                </div>
               </li>
             }
             <li class="nav-item">
-              <a class="nav-link text-dark" asp-area="" asp-controller="Catalogue" asp-action="Root">Catalogue</a>
+              <a class="nav-link text-dark" asp-area="" asp-controller="Catalogue" asp-action="Index">Catalogue</a>
             </li>
             @if (User.Identity.IsAuthenticated)
             {

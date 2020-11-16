@@ -16,7 +16,7 @@ namespace IStore.Web.Controllers
             _categoriesRepository = categoriesRepository;
         }
         
-        public ViewResult Root()
+        public ViewResult Index()
         {
             CatalogueViewModel catalogueViewModel = new CatalogueViewModel();
             

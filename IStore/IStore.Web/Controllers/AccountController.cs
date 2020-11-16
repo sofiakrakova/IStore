@@ -1,4 +1,4 @@
-﻿using IStore.BusinessLogic.Services;
+﻿using IStore.BusinessLogic.Services.Interfaces;
 using IStore.Web.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;

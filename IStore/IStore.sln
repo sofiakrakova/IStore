@@ -5,10 +5,6 @@ VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IStore.Domain", "IStore.Domain\IStore.Domain.csproj", "{3C4CDD92-DA56-4F04-9338-1DCE774E66FA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{CF74A83E-E40A-41F4-B6BA-84B012D2F5BD}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IStore.Domain.Tests", "IStore.Domain.Tests\IStore.Domain.Tests.csproj", "{247BB8BA-8E4D-4CC7-9086-1B995AC1C1A2}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IStore.Sandbox", "IStore.Sandbox\IStore.Sandbox.csproj", "{CA760E39-CE47-412C-A346-63F235DF270E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IStore.Data", "IStore.Data\IStore.Data.csproj", "{2A18EE93-A18B-4A0B-B02E-3C63E9107A60}"
@@ -18,8 +14,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IStore.Logging", "IStore.Logging\IStore.Logging.csproj", "{F46D4BC2-8113-4B90-9A83-DB692CFEDD80}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IStore.BusinessLogic", "IStore.BusinessLogic\IStore.BusinessLogic.csproj", "{F92CF67B-A17F-46A4-9634-B58C121FCBAD}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IStore.BusinessLogic.Tests", "IStore.BusinessLogic.Tests\IStore.BusinessLogic.Tests.csproj", "{3746F180-859D-4967-B617-D206B75ACC65}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,10 +25,6 @@ Global
 		{3C4CDD92-DA56-4F04-9338-1DCE774E66FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C4CDD92-DA56-4F04-9338-1DCE774E66FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C4CDD92-DA56-4F04-9338-1DCE774E66FA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{247BB8BA-8E4D-4CC7-9086-1B995AC1C1A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{247BB8BA-8E4D-4CC7-9086-1B995AC1C1A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{247BB8BA-8E4D-4CC7-9086-1B995AC1C1A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{247BB8BA-8E4D-4CC7-9086-1B995AC1C1A2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CA760E39-CE47-412C-A346-63F235DF270E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CA760E39-CE47-412C-A346-63F235DF270E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA760E39-CE47-412C-A346-63F235DF270E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -55,17 +45,9 @@ Global
 		{F92CF67B-A17F-46A4-9634-B58C121FCBAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F92CF67B-A17F-46A4-9634-B58C121FCBAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F92CF67B-A17F-46A4-9634-B58C121FCBAD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3746F180-859D-4967-B617-D206B75ACC65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3746F180-859D-4967-B617-D206B75ACC65}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3746F180-859D-4967-B617-D206B75ACC65}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3746F180-859D-4967-B617-D206B75ACC65}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{247BB8BA-8E4D-4CC7-9086-1B995AC1C1A2} = {CF74A83E-E40A-41F4-B6BA-84B012D2F5BD}
-		{3746F180-859D-4967-B617-D206B75ACC65} = {CF74A83E-E40A-41F4-B6BA-84B012D2F5BD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7175CB20-5D9C-4D3E-A94D-AED8E6687C7F}

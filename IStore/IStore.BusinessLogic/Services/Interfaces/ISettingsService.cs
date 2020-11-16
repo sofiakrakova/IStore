@@ -1,8 +1,8 @@
 ﻿using IStore.Domain;
 
-namespace IStore.BusinessLogic.Services
+namespace IStore.BusinessLogic.Services.Interfaces
 {
-    public interface IDatabaseSettingsService
+    public interface ISettingsService
     {
         string GetValue(string key);
         Setting Add(string key, string value);

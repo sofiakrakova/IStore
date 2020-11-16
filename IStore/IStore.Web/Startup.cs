@@ -3,6 +3,7 @@ using Autofac.Builder;
 using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
 using IStore.BusinessLogic.Services;
+using IStore.BusinessLogic.Services.Interfaces;
 using IStore.Data;
 using IStore.Data.Interfaces;
 using IStore.Data.Repositories;
@@ -54,12 +55,17 @@ namespace IStore.Web
                 .WithParameter(new PositionalParameter(0, connectionString))
                 .WithParameter(new PositionalParameter(1, "settings"))
                 .SingleInstance();
+
+            builder.RegisterType<ProductsRepository>().As<IProductsRepository>()
+                .WithParameter(new PositionalParameter(0, connectionString))
+                .WithParameter(new PositionalParameter(1, "products"))
+                .SingleInstance();
             #endregion
 
             #region Services DI
 
             builder.RegisterType<UsersManagementService>().As<IUsersManagementService>().SingleInstance();
-            builder.RegisterType<DatabaseSettingsService>().As<IDatabaseSettingsService>().SingleInstance();
+            builder.RegisterType<SettingsService>().As<ISettingsService>().SingleInstance();
             #endregion
         }
 
