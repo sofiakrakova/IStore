@@ -1,13 +1,9 @@
 using Autofac;
-using Autofac.Builder;
-using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
 using IStore.BusinessLogic.Services;
 using IStore.BusinessLogic.Services.Interfaces;
-using IStore.Data;
 using IStore.Data.Interfaces;
 using IStore.Data.Repositories;
-using IStore.Domain;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.CookiePolicy;
@@ -66,6 +62,7 @@ namespace IStore.Web
 
             builder.RegisterType<UsersManagementService>().As<IUsersManagementService>().SingleInstance();
             builder.RegisterType<SettingsService>().As<ISettingsService>().SingleInstance();
+            builder.RegisterType<CategoriesService>().As<ICategoriesService>().SingleInstance();
             #endregion
         }
 
@@ -74,7 +71,6 @@ namespace IStore.Web
             var connString = Configuration.GetConnectionString("Default");
 
             services.AddControllersWithViews(x => x.Filters.Add(new AuthorizeFilter()));
-
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie();
 

@@ -130,7 +130,6 @@ namespace IStore.Sandbox
             List<Category> categories = categoryRepository.GetAll().ToList();
 
             var headphones = categories.Single(x => x.Title == "Headphones");
-            headphones.Active = false;
             categoryRepository.Update(headphones);
         }
     }

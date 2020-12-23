@@ -27,7 +27,6 @@ CREATE TABLE IF NOT EXISTS `IStoreDB`.`categories` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `parent_id` INT NULL DEFAULT NULL,
   `title` NVARCHAR(256) NOT NULL,
-  `active` TINYINT NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -45,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `IStoreDB`.`products` (
   `image` TEXT NULL,
   `category_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_product_category_idx` (`category_id` ASC) VISIBLE,
+ -- INDEX `fk_product_category_idx` (`category_id` ASC) VISIBLE,
   CONSTRAINT `fk_products_categories`
     FOREIGN KEY (`category_id`)
     REFERENCES `IStoreDB`.`categories` (`id`)
@@ -80,8 +79,8 @@ CREATE TABLE IF NOT EXISTS `IStoreDB`.`users` (
   `comment` TEXT NULL DEFAULT NULL,
   `userrole_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_user_user_role1_idx` (`userrole_id` ASC) VISIBLE,
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
+ -- INDEX `fk_user_user_role1_idx` (`userrole_id` ASC) VISIBLE,
+--   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
   CONSTRAINT `fk_users_userroles`
     FOREIGN KEY (`userrole_id`)
     REFERENCES `IStoreDB`.`userroles` (`id`)
@@ -102,8 +101,8 @@ CREATE TABLE IF NOT EXISTS `IStoreDB`.`comments` (
   `user_id` INT NULL DEFAULT NULL,
   `product_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_comment_product_idx` (`product_id` ASC) VISIBLE,
-  INDEX `fk_comment_user_idx` (`user_id` ASC) VISIBLE,
+  -- INDEX `fk_comment_product_idx` (`product_id` ASC) VISIBLE,
+  -- INDEX `fk_comment_user_idx` (`user_id` ASC) VISIBLE,
   CONSTRAINT `fk_comments_products`
     FOREIGN KEY (`product_id`)
     REFERENCES `IStoreDB`.`products` (`id`)
@@ -155,9 +154,9 @@ CREATE TABLE IF NOT EXISTS `IStoreDB`.`supplier_products` (
   `product_id` INT NOT NULL,
   `deliverydays` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_supplier products_supplies1_idx` (`supplier_id` ASC) VISIBLE,
-  INDEX `fk_supplier products_products1_idx` (`product_id` ASC) VISIBLE,
-  UNIQUE INDEX `unique_product_supplier_combination` (`supplier_id` ASC, `product_id` ASC) VISIBLE,
+  -- INDEX `fk_supplier products_supplies1_idx` (`supplier_id` ASC) VISIBLE,
+  -- INDEX `fk_supplier products_products1_idx` (`product_id` ASC) VISIBLE,
+  -- UNIQUE INDEX `unique_product_supplier_combination` (`supplier_id` ASC, `product_id` ASC) VISIBLE,
   CONSTRAINT `fk_supplier_products_suppliers`
     FOREIGN KEY (`supplier_id`)
     REFERENCES `IStoreDB`.`suppliers` (`id`)
@@ -194,8 +193,8 @@ CREATE TABLE IF NOT EXISTS `IStoreDB`.`discounts` (
   `category_id` INT NOT NULL,
   `amountpercent` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_discounts_categories_idx` (`category_id` ASC) VISIBLE,
-  UNIQUE INDEX `category_id_UNIQUE` (`category_id` ASC) VISIBLE,
+  -- INDEX `fk_discounts_categories_idx` (`category_id` ASC) VISIBLE,
+  -- UNIQUE INDEX `category_id_UNIQUE` (`category_id` ASC) VISIBLE,
   CONSTRAINT `fk_discounts_categories`
     FOREIGN KEY (`category_id`)
     REFERENCES `IStoreDB`.`categories` (`id`)
@@ -219,7 +218,7 @@ CREATE TABLE IF NOT EXISTS `IStoreDB`.`orders` (
   `orderdate` DATETIME NOT NULL,
   `deliverydate` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_order_details_users_idx` (`user_id` ASC) VISIBLE,
+ -- INDEX `fk_order_details_users_idx` (`user_id` ASC) VISIBLE,
   CONSTRAINT `fk_order_details_users`
     FOREIGN KEY (`user_id`)
     REFERENCES `IStoreDB`.`users` (`id`)
@@ -239,8 +238,8 @@ CREATE TABLE IF NOT EXISTS `IStoreDB`.`order_items` (
   `qty` INT NOT NULL,
   `order_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_order_items_products_idx` (`product_id` ASC) VISIBLE,
-  INDEX `fk_odrer_items_order_details_idx` (`order_id` ASC) VISIBLE,
+  -- INDEX `fk_order_items_products_idx` (`product_id` ASC) VISIBLE,
+  -- INDEX `fk_odrer_items_order_details_idx` (`order_id` ASC) VISIBLE,
   CONSTRAINT `fk_order_items_products`
     FOREIGN KEY (`product_id`)
     REFERENCES `IStoreDB`.`products` (`id`)

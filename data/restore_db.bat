@@ -1,4 +1,4 @@
-set mysql="C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql"
+set mysql="C:\Program Files\MySQL\MySQL Server 5.5\bin\mysql"
 set password=admin
 %mysql% -u root --password=%password% istoredb < scripts\IStore_Scheme.sql
 %mysql% -u root --password=%password% istoredb < scripts\fill_categories.sql

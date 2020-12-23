@@ -1,0 +1,119 @@
+﻿@model CatalogViewModel
+@{
+    ViewData["Title"] = "Catalog Management";
+}
+@section Scripts {
+    <script>
+        function confirmDelete(id, isConfirmClicked) {
+            if (isConfirmClicked) {
+                $('#deleteCategory_' + id).css("visibility", "visible");
+                $('#confirmDeleteCategory_' + id).css("visibility", "hidden");
+            }
+            else {
+                $('#deleteCategory_' + id).css("visibility", "hidden");
+                $('#confirmDeleteCategory_' + id).css("visibility", "visible");
+            }
+        }
+
+        $('#isRootCheckbox').click(function () {
+            if ($(this).is(':checked')) {
+                $('#parentCategory').hide();
+                $('#submitAddButton').text("Add root category");
+            }
+            else {
+                $('#parentCategory').show();
+                $('#submitAddButton').text("Add category");
+            }
+        })
+    </script>
+}
+
+<div class="container">
+    <div class="row p-3">
+        <form method="post" class="form-inline form-control-sm" asp-controller="Administration" asp-action="AddCategory">
+
+            <!--Title-->
+            <input type="text" class="form-control-sm mr-sm-2" placeholder="Title" name="title">
+
+            <!--Parent-->
+            <div class="input-group-sm mr-sm-2" id="parentCategory">
+                <select class="form-control" id="categorySelect" name="parentId">
+                    @foreach (var item in Model.RootCategories)
+                    {
+                        <option value="@item.Category.Id">@item.Category.Title</option>
+                    }
+                </select>
+            </div>
+
+            <!--Is Root-->
+            <div class="form-check mr-sm-2">
+                <input class="form-check-input" type="checkbox" id="isRootCheckbox" name="isRootCategory">
+                <label class="form-check-label" for="isRootCheckbox">root</label>
+            </div>
+
+            <!--Button-->
+            <button type="submit" class="btn btn-primary btn-sm" id="submitAddButton"><i class="fa fa-plus" aria-hidden="true"></i></button>
+        </form>
+    </div>
+
+    <div class="row">
+        <table class="table table-sm table-hover table-responsive-lg">
+            <thead>
+                <tr>
+
+                    <th scope="col">Type</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Subcategory</th>
+                    <th scope="col"></th> <!--Delete-->
+                    <th scope="col"></th> <!--Confirm/Cancel deletion-->
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var root in Model.RootCategories)
+                {
+                    <tr class="table-active">
+                        <th scope="row">[root]</th>
+                        <td>@root.Category.Title</td>
+                        <td></td>
+                        <td>
+                            <a id="deleteCategory_@root.Category.Id" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#deleteConfirmationModal"
+                               data-category-id="@root.Category.Id" onclick="confirmDelete(@root.Category.Id, false)">Delete group</a>
+                        </td>
+                        <td>
+                            <form id="confirmDeleteCategory_@root.Category.Id" method="post" asp-controller="Administration" asp-action="DeleteCategory" asp-route-categoryId="@root.Category.Id"
+                                  style="visibility:hidden">
+                                <div class="btn-group-sm" role="group" aria-label="Basic example">
+                                    <button type="submit" class="btn btn-danger" onclick="confirmDelete(@root.Category.Id, true)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                    <button type="reset" class="btn btn-secondary" onclick="confirmDelete(@root.Category.Id, true)">Cancel</button>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+
+                    foreach (var child in root.SubCategories)
+                    {
+                        <tr>
+                            <th scope="row">[sub]</th>
+                            <td></td>
+                            <td>@child.Title</td>
+                            <td>
+                                <a id="deleteCategory_@child.Id" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#deleteConfirmationModal"
+                                   data-category-id="@child.Id" onclick="confirmDelete(@child.Id, false)">Delete</a>
+                            </td>
+                            <td>
+                                <form id="confirmDeleteCategory_@child.Id" method="post" asp-controller="Administration" asp-action="DeleteCategory" asp-route-categoryId="@child.Id"
+                                      style="visibility:hidden">
+                                    <div class="btn-group-sm" role="group" aria-label="Basic example">
+                                        <button type="submit" class="btn btn-danger" onclick="confirmDelete(@child.Id, true)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                        <button type="reset" class="btn btn-secondary" onclick="confirmDelete(@child.Id, true)">Cancel</button>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

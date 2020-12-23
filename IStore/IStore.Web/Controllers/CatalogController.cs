@@ -1,16 +1,18 @@
-﻿using IStore.Data.Interfaces;
-using IStore.Web.Models.Catalogue;
+﻿using IStore.BusinessLogic.Services;
+using IStore.Data.Interfaces;
+using IStore.Data.Repositories;
+using IStore.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace IStore.Web.Controllers
 {
-    public class CatalogueController : Controller
+    public class CatalogController : Controller
     {
-        private readonly ILogger<CatalogueController> _logger;
+        private readonly ILogger<CatalogController> _logger;
         private readonly ICategoriesRepository _categoriesRepository;
 
-        public CatalogueController(ICategoriesRepository categoriesRepository, ILogger<CatalogueController> logger)
+        public CatalogController(ICategoriesRepository categoriesRepository, ILogger<CatalogController> logger)
         {
             _logger = logger;
             _categoriesRepository = categoriesRepository;
@@ -18,7 +20,7 @@ namespace IStore.Web.Controllers
         
         public ViewResult Index()
         {
-            CatalogueViewModel catalogueViewModel = new CatalogueViewModel();
+            CatalogViewModel catalogueViewModel = new CatalogViewModel();
             
             var allCategories = _categoriesRepository.GetAll();
             catalogueViewModel.AllCategories = allCategories;

@@ -13,7 +13,7 @@ Swivel design for portability
 47 ¼ inch (1.2 meter) tangle free, Y type cord',
   100.2,
   'images/catalogue/sony.jpg',
-    1
+    8
 ),
 
 (
@@ -24,7 +24,7 @@ Swivel design for portability
      ICE BLUE package that everyone will love using!',
      99.1,
      'images/catalogue/instax.jpg',
-     1
+     8
 ),
 
 (
@@ -34,7 +34,7 @@ Swivel design for portability
     4K UHD (3840 x 2160) video support may vary based upon host device, file attributes and other factors',
      22.2,
      'images/catalogue/sandisk.jpg',
-     1
+     7
 ),
 
 (
@@ -44,7 +44,7 @@ Swivel design for portability
     in fine detail resolving power over existing 16 megapixel Micro Four Thirds sensors',
      229.1,
      'images/catalogue/lumia.jpg',
-     1
+     11
 ),
 
 (
@@ -54,7 +54,7 @@ Swivel design for portability
 Refresh rate: 75 hertz - Using HDMI port',
      95.1,
      'images/catalogue/monitor.jpg',
-     2
+     12
 ),
 
 
@@ -66,7 +66,7 @@ Refresh rate: 75 hertz - Using HDMI port',
 And with SuperPhoto, HERO 9 Black can automatically pick all the best image processing for you',
      115.13,
      'images/catalogue/gopro.jpg',
-     2
+     8
 ),
 
 (
@@ -77,7 +77,7 @@ And with SuperPhoto, HERO 9 Black can automatically pick all the best image proc
     Coating with FMC Broadband coating and premium BAK4 prism, it ensure imaging verisimilar.',
      45.1,
      'images/catalogue/occer.jpg',
-     2
+     12
 ),
 
 (
@@ -87,7 +87,7 @@ And with SuperPhoto, HERO 9 Black can automatically pick all the best image proc
     Shine Armor Fortify Quick Coat ceramic car wax provides a waterless wash, coat and shine, all in one convenient product.',
      15.1,
      'images/catalogue/shinearmor.jpg',
-     3
+     14
 ),
 
 (
@@ -98,7 +98,7 @@ Simply spray on a clean dry car, spread and remove with a folded microfiber clot
 best performance paint should be free of contaminants by using a clay bar or compound prior to application',
      14.5,
      'images/catalogue/turtlewax.jpg',
-     3
+     14
 ),
 
 (
@@ -111,7 +111,7 @@ Machine washable and reusable
 6 microfiber pads per pack',
      7.0,
      'images/catalogue/viking.jpg',
-     3
+     15
 ),
 
 (
@@ -124,7 +124,7 @@ Improved level of protection.Date on item is manufactured date
 More UVA and UVB protection',
      11.1,
      'images/catalogue/chemicalguys.jpg',
-     3
+     15
 ),
 
 (
@@ -133,7 +133,7 @@ More UVA and UVB protection',
     'NO FALSIES NEEDED! Lash Princess False Lash Mascara defines and separates lashes while achieving a bold look.',
     4.99,
     'images/catalogue/essence.jpg',
-    4
+    16
 ),
 
 (
@@ -143,7 +143,7 @@ More UVA and UVB protection',
 Lavish Lash is proven by science. Experience drastic increases in length and thickness of your eyelashes and eyebrows in as little as 60 days for the perfect lash boost! Contains proprietary botanically-derived compounds that penetrate hair follicles to stimulate lash and brow growth which in turn fortifies the eyelashes and brows to noticeably lengthen and thicken them.',
     29.99, 
     'images/catalogue/lavishlash.jpg',
-    4
+    16
 ),
 (
     NULL,
@@ -152,7 +152,7 @@ Lavish Lash is proven by science. Experience drastic increases in length and thi
 PRECISE TIP: Our ultra-precise tip is flexible and easy to use. Every stroke is unbelievably fluid for a defined finish. Control the thickness of your lines by pressing down just a touch. Fine and natural, broad and bold—the look is always up to you.',
     8.97,
     'images/catalogue/nyx.jpg',
-    4
+    16
 ),
 
 (
@@ -161,7 +161,7 @@ PRECISE TIP: Our ultra-precise tip is flexible and easy to use. Every stroke is 
     'SUPER BRIGHT LEDS & FOUR MODES ––– Your new bike light set features extremely bright LEDs which illuminate the entire road. Featuring four different modes of lighting which you can switch with the click of a button. Say goodbye to bulky bike lights with excessive wiring.',
     13.99, 
    'images/catalogue/vont.jpg',
-    6
+    22
 ),
 
 (
@@ -171,7 +171,7 @@ PRECISE TIP: Our ultra-precise tip is flexible and easy to use. Every stroke is 
 Made with Memory-Weave fabric for comfort and flexibility, these bandages stretch, bend, and flex with your skin as you move, and include a Quilt-Aid Comfort Pad designed to cushion painful wounds which may help prevent re-injury',
     6.88, 
     'images/catalogue/band.jpg',
-    6
+    22
 ),
 
 (
@@ -180,7 +180,7 @@ Made with Memory-Weave fabric for comfort and flexibility, these bandages stretc
     'LET OUR POSTURE CORRECTOR BE PART OF YOUR HEALTHIER LIFE: Our Posture Corrector helps you regain proper posture which can help to prevent the onset of back, neck and shoulder pain. Our Posture Corrector helps provide alignment while sitting, standing, lying down or during your other daily activities. Proper posture is important for all ages and is essential for living a productive life.',
     24.99,
     'images/catalogue/posture.jpg',
-     6 
+     23 
 );
 
 

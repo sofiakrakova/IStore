@@ -26,7 +26,7 @@ namespace IStore.Data.Repositories
         {
             using (IDbConnection connection = new MySqlConnection(ConnectionString))
             {
-                var query = $"INSERT INTO {TableName} VALUE(NULL, @parent_id, @title, @active);";
+                var query = $"INSERT INTO {TableName} VALUE(NULL, @parent_id, @title);";
                 var affectedRows = connection.Execute(query, obj);
                 return affectedRows;
             }
@@ -53,13 +53,38 @@ namespace IStore.Data.Repositories
             using (IDbConnection connection = new MySqlConnection(ConnectionString))
             {
                 var query = $@"UPDATE {TableName} 
-                            SET parent_id = @parent_id, title = @title, active = @active
+                            SET parent_id = @parent_id, title = @title 
                             WHERE id = @id;";
 
                 var affectedRows = connection.Execute(query, obj);
                 return affectedRows;
             }
         }
+
+
+        #endregion
+
+        #region ICategoriesRepository<T> members
+
+        public IEnumerable<Category> GetAllByName(string name)
+        {
+            using (IDbConnection connection = new MySqlConnection(ConnectionString))
+            {
+                var query = $"SELECT * FROM {TableName} WHERE title = @name";
+                return connection.Query<Category>(query, new { name });
+            }
+        }
+
+        public int DeleteWithChildren(int id)
+        {
+            using (IDbConnection connection = new MySqlConnection(ConnectionString))
+            {
+                var query = $@"DELETE FROM {TableName} WHERE parent_id = @id OR id = @id;";
+                var affectedRows = connection.Execute(query, new { id });
+                return affectedRows;
+            }
+        }
+
         #endregion
     }
 }

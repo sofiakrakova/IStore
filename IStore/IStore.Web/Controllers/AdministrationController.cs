@@ -1,24 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using IStore.BusinessLogic.Models;
+using IStore.BusinessLogic.Services.Interfaces;
 using IStore.Data.Interfaces;
 using IStore.Domain;
 using IStore.Web.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace IStore.Web.Controllers
 {
     public class AdministrationController : Controller
     {
         private readonly ICategoriesRepository _categoriesRepository;
+        private readonly ICategoriesService _categoriesService;
         private readonly IProductsRepository _productsRepository;
 
-        public AdministrationController(ICategoriesRepository categoriesRepository, IProductsRepository productsRepository)
+        public AdministrationController(ICategoriesRepository categoriesRepository, ICategoriesService categoriesService, IProductsRepository productsRepository)
         {
             _categoriesRepository = categoriesRepository ?? throw new ArgumentNullException(nameof(categoriesRepository));
+            _categoriesService = categoriesService ?? throw new ArgumentNullException(nameof(categoriesService));
             _productsRepository = productsRepository ?? throw new ArgumentNullException(nameof(productsRepository));
         }
 
@@ -27,6 +30,7 @@ namespace IStore.Web.Controllers
             return View();
         }
 
+        #region CheckIn
 
         public IActionResult CheckIn()
         {
@@ -81,5 +85,50 @@ namespace IStore.Web.Controllers
 
             return string.Empty;
         }
+        #endregion
+
+        #region Catalog management
+
+        [HttpGet]
+        public IActionResult CatalogManagement()
+        {
+            CatalogViewModel catalogViewModel = new CatalogViewModel();
+
+            var allCategories = _categoriesService.GetRootCategories();
+            catalogViewModel.RootCategories = new List<RootCategoryModel>(allCategories);
+
+            return View("CatalogManagement", catalogViewModel);
+        }
+
+
+        [HttpPost]
+        public IActionResult DeleteCategory(int categoryId)
+        {
+            _categoriesRepository.DeleteWithChildren(categoryId);
+
+            return RedirectToAction("CatalogManagement");
+        }
+
+        [HttpPost]
+        public IActionResult AddCategory(string title, int parentId, string isRootCategory)
+        {
+            //TODO: better validate title
+            if (string.IsNullOrWhiteSpace(title))
+                return RedirectToAction("CatalogManagement");
+
+            //TODO:find a better way to pass checkbox value
+            if (isRootCategory != null && isRootCategory.Equals("on"))
+            {
+                _categoriesRepository.Create(new Category() { Title = title });
+            }
+            else
+            {
+                _categoriesRepository.Create(new Category() { Title = title, Parent_Id = parentId });
+            }
+
+            return RedirectToAction("CatalogManagement");
+        }
+
+        #endregion
     }
 }

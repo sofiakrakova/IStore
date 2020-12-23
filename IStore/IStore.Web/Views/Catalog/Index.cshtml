@@ -1,10 +1,10 @@
-﻿@model IStore.Web.Models.Catalogue.CatalogueViewModel
+﻿@model IStore.Web.Models.CatalogViewModel
 @{
-  ViewData["Title"] = "Catalogue";
+  ViewData["Title"] = "Catalog";
 }
 
 <div class="text-left">
-  <h1 class="display-4">Catalogue</h1>
+  <h1 class="display-4">Catalog</h1>
 </div>
 
 <ul>
@@ -19,9 +19,8 @@
         @foreach (var child in Model.GetChildCategories(category.Id))
         {
         <li>
-          <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="@child.Id">
-            <label class="custom-control-label" for="@child.Id">@child.Title</label>
+          <div>
+            <a asp-controller="Product" asp-action="Details" asp-route-id="@child.Id"> @child.Title</a>
           </div>
         </li>
         }

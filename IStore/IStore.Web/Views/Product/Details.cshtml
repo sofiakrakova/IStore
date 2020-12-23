@@ -1,0 +1,28 @@
+﻿@using IStore.Domain;
+@model IEnumerable<Product>
+@{
+    Layout = "_Layout";
+}
+
+<div>
+    @foreach (Product product in Model)
+    {
+
+        <div class="products-main__product">
+            <a asp-controller="Product" asp-action="About" asp-route-id="@product.Id" class="products-main__link">
+                <div class="products-main__img-wrapper">
+                    <img src="/@product.Image" alt="Notebook" class="products-main__img">
+                </div>
+                <div class="products-main__info">
+                    <p class="products-main__name">@product.Title</p>
+                    <p class="products-main__price">@product.Price</p>
+                </div>
+                <div class="products-main__btn-group">
+                    <div class="products-main__btn"><i class="fa fa-shopping-cart products-main__btn-icon"></i></div>
+                    <div class="products-main__btn"><i class="fa fa-heart products-main__btn-icon"></i></div>
+                </div>
+            </a>
+        </div>
+    }
+
+</div>
