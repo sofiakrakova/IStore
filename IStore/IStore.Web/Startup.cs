@@ -56,6 +56,17 @@ namespace IStore.Web
                 .WithParameter(new PositionalParameter(0, connectionString))
                 .WithParameter(new PositionalParameter(1, "products"))
                 .SingleInstance();
+
+            builder.RegisterType<CommentsRepository>().As<ICommentsRepository>()
+                .WithParameter(new PositionalParameter(0, connectionString))
+                .WithParameter(new PositionalParameter(1, "comments"))
+                .SingleInstance();
+
+            builder.RegisterType<OrdersRepository>().As<IOrdersRepository>()
+                .WithParameter(new PositionalParameter(0, connectionString))
+                .WithParameter(new PositionalParameter(1, "orders"))
+                .SingleInstance();
+
             #endregion
 
             #region Services DI
@@ -70,6 +81,7 @@ namespace IStore.Web
         {
             var connString = Configuration.GetConnectionString("Default");
 
+            services.AddScoped<ICommentsRepository, CommentsRepository>();
             services.AddControllersWithViews(x => x.Filters.Add(new AuthorizeFilter()));
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie();
