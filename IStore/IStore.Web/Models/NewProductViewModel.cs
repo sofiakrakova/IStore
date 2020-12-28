@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace IStore.Web.Models
 {
-    public class ProductViewModel
+    public class NewProductViewModel
     {
         [BindNever]
         public IEnumerable<Category> Categories { get; set; }

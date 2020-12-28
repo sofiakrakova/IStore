@@ -3,11 +3,13 @@ using IStore.BusinessLogic.Services.Interfaces;
 using IStore.Data.Interfaces;
 using IStore.Domain;
 using IStore.Web.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace IStore.Web.Controllers
@@ -19,15 +21,22 @@ namespace IStore.Web.Controllers
         private readonly IProductsRepository _productsRepository;
         private readonly IOrdersRepository _ordersRepository;
         private readonly IUsersRepository _userRepository;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public AdministrationController(ICategoriesRepository categoriesRepository, ICategoriesService categoriesService, IProductsRepository productsRepository,
-            IOrdersRepository ordersRepository, IUsersRepository _users)
+        public AdministrationController(
+            ICategoriesRepository categoriesRepository, 
+            ICategoriesService categoriesService, 
+            IProductsRepository productsRepository,
+            IOrdersRepository ordersRepository, 
+            IUsersRepository usersRepository,
+            IWebHostEnvironment webHostEnvironment)
         {
             _categoriesRepository = categoriesRepository ?? throw new ArgumentNullException(nameof(categoriesRepository));
             _categoriesService = categoriesService ?? throw new ArgumentNullException(nameof(categoriesService));
             _productsRepository = productsRepository ?? throw new ArgumentNullException(nameof(productsRepository));
             _ordersRepository = ordersRepository;
-            _userRepository = _users;
+            _userRepository = usersRepository;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
@@ -56,27 +65,31 @@ namespace IStore.Web.Controllers
 
         public IActionResult CheckIn()
         {
-            ProductViewModel productViewModel = new ProductViewModel() { Categories = _categoriesRepository.GetAll() };
+            NewProductViewModel productViewModel = new NewProductViewModel() 
+            {
+                Categories = _categoriesRepository.GetAll().Where(x => x.Parent_Id != null).ToList()
+            };
             return View("CheckIn", productViewModel);
         }
 
         [HttpPost]
-        public IActionResult CheckIn(ProductViewModel productViewModel)
+        public IActionResult CheckIn(NewProductViewModel productViewModel)
         {
             if (ModelState.IsValid)
             {
+                var imagePath = UploadFile(productViewModel.Image).GetAwaiter().GetResult();
+
                 Product product = new Product()
                 {
                     Title = productViewModel.Title,
                     Description = productViewModel.Description,
                     Price = productViewModel.Price,
                     Category_Id = productViewModel.CategoryId.Value,
-                    Image = UploadFile(productViewModel.Image).GetAwaiter().GetResult(),
+                    Image = imagePath,
                 };
 
 
-                //TODO: Save
-                //_productsRepository.Create(product);
+                _productsRepository.Create(product);
 
                 return View("Index");
             }
@@ -88,8 +101,7 @@ namespace IStore.Web.Controllers
         {
             if (uploadedFile != null)
             {
-                // путь к папке Files
-                string path = @"C:\Users\Andrey\source\repos\lessons\SofiaK\Coursework\data\images\upload\" + uploadedFile.FileName;
+                string relativePath = @"images\catalogue\" + uploadedFile.FileName;
 
                 byte[] imageData = null;
                 using (var binaryReader = new BinaryReader(uploadedFile.OpenReadStream()))
@@ -97,12 +109,12 @@ namespace IStore.Web.Controllers
                     imageData = binaryReader.ReadBytes((int)uploadedFile.Length);
                 }
 
-                using (var fileStream = new FileStream(path, FileMode.Create))
+                using (var fileStream = new FileStream($"{_webHostEnvironment.WebRootPath}\\{relativePath}", FileMode.OpenOrCreate))
                 {
                     await uploadedFile.CopyToAsync(fileStream);
                 }
 
-                return path;
+                return relativePath;
             }
 
             return string.Empty;
