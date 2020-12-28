@@ -26,7 +26,7 @@ namespace IStore.Data.Repositories
         {
             using (IDbConnection connection = new MySqlConnection(ConnectionString))
             {
-                var query = $@"INSERT INTO {TableName} VALUE(NULL, @iser_id, @address, @paymenttype, @total, @status, @orderdate, @deliverydate);";
+                var query = $@"INSERT INTO {TableName} VALUE(NULL, @user_id, @address, @paymenttype, @total, @status, @orderdate, @deliverydate);";
                 var affectedRows = connection.Execute(query, obj);
                 return affectedRows;
             }
