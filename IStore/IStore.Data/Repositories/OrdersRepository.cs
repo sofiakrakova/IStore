@@ -69,15 +69,21 @@ namespace IStore.Data.Repositories
                             JOIN users as u
                             ON o.user_id = u.id
                             JOIN userroles AS ur
-                            ON u.userrole_id = ur.id";
+                            ON u.userrole_id = ur.id
+                            JOIN products as pr
+                            ON o.product_id = pr.product_id;";
 
-                var orders = connection.Query<Order, User, UserRole, Order>(query, (order, user, userrole) =>
-                {
-                    order.User = user;
-                    order.User.UserRole = userrole;
-                    return order;
-                },
-                splitOn: "id");
+
+
+
+                var orders = connection.Query<Order, User, UserRole, Order, Product>(query, (order, user, userrole, product) =>
+                 {
+                     order.User = user;
+                     order.User.UserRole = userrole;
+                    // order.OrderItems = product; //?
+                     return order;
+                 },
+                splitOn: "id") ;
 
                 return orders;
             }
