@@ -52,18 +52,61 @@
         }
     </div>
     <div>
-        <h4>Способ оплаты:</h4>
-        <p>
-            <label><input name="money" type="radio" value="card"><img src="~/images/cart/cards.jpg" style="width: 100px;"></label>
-
-            <label><input name="money" type="radio" value="qiwi"><img src="~/images/cart/qiwi.jpg" style="width: 100px;"></label>
-
-            <label><input name="money" type="radio" value="yandex"><img src="~/images/cart/yandex.jpg" style="width: 100px;"></label>
-        </p>
+        <form method="post" action="~/Cart/AddOrder" autocomplete="off">
+            <div class="form-group">
+                <h4>Адрес доставки:</h4>
+            </div>
+            <div class="form-group">
+                <label for="country">Страна:</label>
+                <input name="country" type="text" class="form-control" id="country" placeholder="Введите страну">
+            </div>
+            <div class="form-group">
+                <label for="area">Область:</label>
+                <input name="area" type="text" class="form-control" id="area" placeholder="Введите область">
+            </div>
+            <div class="form-group">
+                <label for="city">Город:</label>
+                <input name="city" type="text" class="form-control" id="city" placeholder="Введите город">
+            </div>
+            <div class="form-group">
+                <label for="street">Улица:</label>
+                <input name="street" type="text" class="form-control" id="street" placeholder="Введите улицу">
+            </div>
+            <div class="form-group">
+                <label for="house">Дом:</label>
+                <input name="house" type="text" class="form-control" id="house" placeholder="Введите дом">
+            </div>
+            <div class="form-group">
+                <label for="kv">Квартира:</label>
+                <input name="kv" type="text" class="form-control" id="kv" placeholder="Введите квартиру">
+            </div>
+            <div class="form-group">
+                <label for="kv">Дата доставки:</label>
+                <input name="date" type="date" class="form-control" id="kv" placeholder="Время доставки">
+            </div>
+            <div class="form-group">
+                <h4>Способ оплаты:</h4>
+            </div>
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-secondary active">
+                    <input type="radio" name="paymentType" id="card" autocomplete="off" checked> <img src="~/images/cart/cards.png" style="width: 100px;">
+                </label>
+                <label class="btn btn-secondary">
+                    <input type="radio" name="paymentType" id="qiwi" autocomplete="off"> <img src="~/images/cart/qiwi.png" style="width: 100px;">
+                </label>
+                <label class="btn btn-secondary">
+                    <input type="radio" name="paymentType" id="yandex" autocomplete="off"> <img src="~/images/cart/yandex.png" style="width: 100px;">
+                </label>
+            </div>
+            <br>
+            <div>
+                <b>Итого:</b> <span id="total-cart-summa">@Math.Round(allSum, 3)</span> €
+            </div>
+            <button type="submit" class="btn btn-primary">Оформить заказ</button>
+        </form>
     </div>
-    <div><b>Итого:</b> <span id="total-cart-summa">@Math.Round(allSum, 3)</span> €</div>
-    <br>
-    <button id="order" class="btn btn-info">Оформить заказ</button>
+    
+
 </div>
 
 
