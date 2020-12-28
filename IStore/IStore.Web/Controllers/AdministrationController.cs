@@ -17,18 +17,40 @@ namespace IStore.Web.Controllers
         private readonly ICategoriesRepository _categoriesRepository;
         private readonly ICategoriesService _categoriesService;
         private readonly IProductsRepository _productsRepository;
+        private readonly IOrdersRepository _ordersRepository;
+        private readonly IUsersRepository _userRepository;
 
-        public AdministrationController(ICategoriesRepository categoriesRepository, ICategoriesService categoriesService, IProductsRepository productsRepository)
+        public AdministrationController(ICategoriesRepository categoriesRepository, ICategoriesService categoriesService, IProductsRepository productsRepository,
+            IOrdersRepository ordersRepository, IUsersRepository _users)
         {
             _categoriesRepository = categoriesRepository ?? throw new ArgumentNullException(nameof(categoriesRepository));
             _categoriesService = categoriesService ?? throw new ArgumentNullException(nameof(categoriesService));
             _productsRepository = productsRepository ?? throw new ArgumentNullException(nameof(productsRepository));
+            _ordersRepository = ordersRepository;
+            _userRepository = _users;
         }
 
         public IActionResult Index()
         {
             return View();
         }
+
+        #region Order management
+        public ViewResult OrderManagement()
+        {
+            return View("OrderManagement", _ordersRepository);
+        }
+
+        public IActionResult MakeChangesInOrder(int id, string status)
+        {
+            Order order = _ordersRepository.Get(id);
+            order.Status = status;
+            _ordersRepository.Delete(order.Id);
+            _ordersRepository.Create(order);
+            return Redirect("~/Administration/OrderManagement");
+        }
+
+        #endregion
 
         #region CheckIn
 
