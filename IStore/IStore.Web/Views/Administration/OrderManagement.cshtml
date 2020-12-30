@@ -1,0 +1,67 @@
+﻿@model IOrdersRepository
+@using IStore.Data.Interfaces;
+@using IStore.Domain;
+@using System.Security.Claims;
+@using Microsoft.AspNetCore.Authentication.Cookies;
+
+<div class="table-responsive">
+    @{
+        if (Model.GetAll().Count() == 0)
+        {
+            <p>В данный момент нет новых заказов.</p>
+
+        }
+        else
+        {
+
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>Id заказа</th>
+                        <th>Покупатель</th>
+                        <th>Список товаров в заказе</th>
+                        <th>Поставщик</th>
+                        <th>Адрес доставки</th>
+                        <th>Дата доставки</th>
+                        <th>Дата заказа</th>
+                        <th>Статус заказа</th>
+                    </tr>
+                    @{
+                        var orders = Model.GetAll().OrderBy(x => x.OrderDate);
+                        var userRep = (IUsersRepository)ViewData["UserRep"];
+
+                        foreach (Order order in orders)
+                        {
+                            <tr>
+                                <th>@order.Id</th>
+                                <th>@order.User.Id</th>
+                                <th>
+                                    @{
+                                        /*
+                                                                                foreach (var item in order.OrderItems)
+                                                                                {
+                                                                                    <p>@item.Product.Title</p>
+                                                                                }
+                                        */
+                                    }
+                                </th>
+                                <th>Барак Обама</th> @{/* TODO:Вернуть поставщика */}
+                                <th>@order.Address</th>
+                                <th>@order.DeliveryDate</th>
+                                <th>@order.OrderDate</th>
+                                <th>
+                                    <form method="post" action="~/Administration/MakeChangesInOrder">
+                                        <input name="id" type="hidden" value="@order.Id">
+                                        <input name="status" type="text" class="form-control" id="country" placeholder="@order.Status">
+                                        <button type="submit" class="btn btn-primary">Применить</button>
+                                    </form>
+                                </th>
+
+                            </tr>
+                        }
+                    }
+                </thead>
+            </table>
+        }
+    }
+</div>

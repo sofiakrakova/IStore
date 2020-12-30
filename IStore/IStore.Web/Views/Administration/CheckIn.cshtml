@@ -1,0 +1,35 @@
+﻿@model NewProductViewModel
+@{
+  ViewData["Title"] = "Check in a new product";
+}
+
+<div class="col-md-6 offset-md-3 border rounded bg-light">
+  <h2 class="form-text text-center">Check in a new product</h2>
+  <form asp-action="CheckIn" enctype="multipart/form-data">
+    <div class="form-group">
+      <label for="titleInput">Title *</label>
+      <input id="titleInput" class="form-control" asp-for="Title" required>
+    </div>
+    <div class="form-group">
+      <label for="descriptionInput">Description</label>
+      <textarea id="descriptionInput" class="form-control" asp-for="Description"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="priceInput">Price *</label>
+      <input id="priceInput" class="form-control" asp-for="Price" required>
+    </div>
+    <div class="form-group">
+      <label for="categorySelect">Category *</label>
+      <select class="form-control" id="categorySelect" asp-for="CategoryId" 
+              asp-items=@(new SelectList(Model.Categories, dataValueField: "Id", dataTextField: "Title"))>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="imageAttachment">Image</label>
+      <input type="file" class="form-control-file" id="imageAttachment" asp-for="Image">
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Add new product</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,108 @@
+﻿@using IStore.Domain;
+@using System.Security.Claims
+@model Product
+@{
+    Layout = "_Layout";
+}
+
+<div class="single">
+    <div class="col-md-9 top-in-single">
+        <div class="col-md-5 single-top">
+            <div class="flexslider">
+                <!-- FlexSlider -->
+                <link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen">
+
+                <script>
+                    // Can also be used with $(document).ready()
+                    $(window).load(function () {
+                        $('.flexslider').flexslider({
+                            animation: "slide",
+                            controlNav: "thumbnails"
+                        });
+                    });
+                </script>
+                <!-- //FlexSlider-->
+
+
+                <div class="clearfix"></div>
+                <div class="flex-viewport" style="overflow: hidden; width: 33%; position: relative;">
+                    <div class="thumb-image">
+                        <img src="/@Model.Image" class="product-image" draggable="false">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7 single-top-in">
+                <div class="single-para">
+                    <h4>@Model.Title</h4>
+                    <p>@Model.Description</p>
+
+                    <div class="star-on">
+                        <div class="review">
+                            <h2>Комментарии:</h2>
+                            <div>
+                                @{
+                                    IEnumerable<Comment> comments = (IEnumerable<Comment>)ViewData["comments"];
+                                    if (comments.Count() == 0)
+                                    {
+                                        <p>Комментариев нет</p>
+                                    }
+                                    else
+                                    {
+                                        foreach (Comment comment in comments)
+                                        {
+                                            <div>
+                                                @{ 
+                                                    if (comment.User_Id == 0)
+                                                    {
+                                                        <p><b>Неавторизованный пользователь</b></p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p><b>Пользователь @comment.User_Id</b></p>
+                                                    }
+                                                }
+                                                <p>@comment.Text</p>
+                                                <hr>
+                                            </div>
+                                        }
+                                    }
+                                }
+                                <br>
+                                <form method="post" action="~/Product/AddComment">
+                                    <input type="hidden" value="@Model.Id" name="product_id" />
+                                    <div class="form-group">
+                                        <input name="text" type="text" class="form-control" id="kv" placeholder="Текст комментария">
+                                    </div>
+
+                                    @{
+                                        if (User.Identity.IsAuthenticated)
+                                        {
+                                            <input type="hidden" value="@User.FindFirstValue(ClaimTypes.NameIdentifier)" name="user_id" />
+                                        }
+                                        else
+                                        {
+                                            <input type="hidden" value="1" name="user_id" />
+                                        }
+
+                                    }
+                                    <button type="submit" class="btn btn-primary">Добавить комментарий</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+
+                    <label class="add-to">@Model.Price</label>
+
+                    <a class="cart " asp-action="AddToCard" asp-route-id="@Model.Id">В корзину</a>
+
+                    <p>В корзине: @ViewData["productCount"]</p>
+
+
+                </div>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+</div>

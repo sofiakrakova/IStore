@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />
+    <PackageReference Include="log4net" Version="2.0.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IStore.BusinessLogic\IStore.BusinessLogic.csproj" />
+    <ProjectReference Include="..\IStore.Data\IStore.Data.csproj" />
+    <ProjectReference Include="..\IStore.Domain\IStore.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
